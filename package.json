@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "Process a directory of markdown and yaml files to JSON files",
   "main": "index.js",
+  "bin": {
+    "processto": "./cli.js"
+  },
   "scripts": {
+    "lint": "prettier --write --single-quote --trailing-comma --no-semi *.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -18,6 +22,10 @@
     "globby": "^6.1.0",
     "js-yaml": "^3.8.3",
     "marked": "^0.3.6",
+    "mkdirp": "^0.5.1",
     "yargs": "^7.1.0"
+  },
+  "devDependencies": {
+    "prettier": "^1.2.2"
   }
 }
