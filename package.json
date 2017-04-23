@@ -1,5 +1,5 @@
 {
-  "name": "process-md-yml",
+  "name": "processto",
   "version": "1.0.0",
   "description": "Process a directory of markdown and yaml files to JSON files",
   "main": "index.js",
