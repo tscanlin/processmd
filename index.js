@@ -8,10 +8,14 @@ const yaml = require('js-yaml')
 const mkdirp = require('mkdirp')
 
 const EXTENSIONS = {
-  JSON: '.json'
+  JSON: '.json',
+  MD: '.md',
+  YML: '.yml',
 }
 
 const SOURCE_MODE = 'source'
+
+const FRONTMATTER_SEPERATOR = '---\n'
 
 marked.setOptions(
   {
@@ -57,22 +61,22 @@ function processto(options, callback) {
         : processFileCallback
 
       result.forEach(function(file) {
-        processingFunc(file, function(err, data) {
-          processingCallbackFunc(file, commonDir, err, data)
+        processingFunc(file, commonDir, function(err, data) {
+          processingCallbackFunc(file, EXTENSIONS.JSON, commonDir, data)
         })
       })
     })
   })
 
-  function processFileCallback(file, commonDir, err, data) {
+  function processFileCallback(file, ext, commonDir, data) {
     const baseFilename = file.replace(commonDir, '')
     // console.log(baseFilename, err, data)
     const parsedPath = path.parse(path.join(options.outputDir, baseFilename))
     const sourceExt = parsedPath.ext
     const sourceBase = parsedPath.base
     const newPathObj = Object.assign({}, parsedPath, {
-      ext: EXTENSIONS.JSON,
-      base: parsedPath.base.replace(sourceExt, EXTENSIONS.JSON)
+      ext: ext,
+      base: parsedPath.base.replace(sourceExt, ext)
     })
     const newPath = path.format(newPathObj)
 
@@ -83,7 +87,7 @@ function processto(options, callback) {
       data.base = path.basename(newPath)
     }
     if (options.includeExt) {
-      data.ext = EXTENSIONS.JSON
+      data.ext = ext
     }
     if (options.includeSourceBase) {
       data.sourceBase = sourceBase
@@ -108,13 +112,13 @@ function processto(options, callback) {
   return p
 }
 
-function processFile(file, cb) {
+function processFile(file, commonDir, cb) {
   if (fs.lstatSync(file).isDirectory()) {
     return
   }
   fs.readFile(file, (err, data) => {
     const fileContent = data.toString()
-    const hasFrontmatter = fileContent.indexOf('---\n') === 0
+    const hasFrontmatter = fileContent.indexOf(FRONTMATTER_SEPERATOR) === 0
     const isYaml = file.endsWith('.yaml') || file.endsWith('.yml')
     let content = fileContent.trim()
     let frontmatter = {}
@@ -126,7 +130,7 @@ function processFile(file, cb) {
     }
 
     if (hasFrontmatter) {
-      let splitContent = fileContent.split('---\n')
+      let splitContent = fileContent.split(FRONTMATTER_SEPERATOR)
       // Remove first string in split content which is empty.
       if (splitContent[0] === '') {
         splitContent.shift()
@@ -152,24 +156,25 @@ function isMarkdown(data) {
   return Boolean(data.bodyContent && data.bodyHtml)
 }
 
-function unProcessFile(file, cb) {
+function unProcessFile(file, commonDir, cb) {
   if (fs.lstatSync(file).isDirectory()) {
     return
   }
   fs.readFile(file, (err, data) => {
     const fileContent = data.toString()
     const fileData = JSON.parse(fileContent)
+
     console.log(file);
     const parsedPath = path.parse(file)
-    console.log(parsedPath);
-    // const fileData = yaml.safeDump(fileContent)
-    console.log(fileData, isMarkdown(fileData));
-    if (isMarkdown(fileData)) {
-      console.log('@@@MD')
-      // writeFile()
-    } else {
 
-    }
+    // if (isMarkdown) {
+    //
+    // }
+
+    // console.log(parsedPath);
+    // const yamlContent = yaml.safeDump(fileData)
+    // console.log(yamlContent, isMarkdown(fileData));
+
 
     // console.log(fileData);
     // console.log(path.format(fileData));
@@ -211,6 +216,21 @@ function writeFile(file, content, cb) {
       cb(e, data)
     })
   })
+}
+
+function cleanFileProps(obj) {
+  delete obj.dir
+  delete obj.base
+  delete obj.ext
+  delete obj.sourceBase
+  delete obj.sourceExt
+  return obj
+}
+
+function cleanMarkdownProps(obj) {
+  delete obj.bodyContent
+  delete obj.bodyHtml
+  return obj
 }
 
 // Find the common parent directory given an array of files.
