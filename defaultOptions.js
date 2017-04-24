@@ -7,10 +7,10 @@ module.exports = {
   includeBase: true,
   // Include the extension (.json) as `ext` on the resulting json objects.
   includeExt: true,
-  // Include the old filename (.md / .yml) as `oldBase` on the resulting json objects.
-  includeOldBase: true,
-  // Include the old extension (.md / .yml) as `oldExt` on the resulting json objects.
-  includeOldExt: true,
+  // Include the source filename (.md / .yml) as `sourceBase` on the resulting json objects.
+  includeSourceBase: true,
+  // Include the source extension (.md / .yml) as `sourceExt` on the resulting json objects.
+  includeSourceExt: true,
   // Convert mode. Possible options for this are 'json' or 'source'
   convertMode: 'json'
 }

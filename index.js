@@ -52,44 +52,51 @@ function processto(options, callback) {
       const processingFunc = options.convertMode === SOURCE_MODE
         ? unProcessFile
         : processFile
+      const processingCallbackFunc = options.convertMode === SOURCE_MODE
+        ? () => {} //unProcessFileCallback
+        : processFileCallback
 
       result.forEach(function(file) {
         processingFunc(file, function(err, data) {
-          const baseFilename = file.replace(commonDir, '')
-          // console.log(baseFilename, err, data)
-          const parsedPath = path.parse(path.join(options.outputDir, baseFilename))
-          const oldExt = parsedPath.ext
-          const oldBase = parsedPath.base
-          const newPathObj = Object.assign({}, parsedPath, {
-            ext: EXTENSIONS.JSON,
-            base: parsedPath.base.replace(oldExt, EXTENSIONS.JSON)
-          })
-          const newPath = path.format(newPathObj)
-
-          if (options.includeDir) {
-            data.dir = path.dirname(newPath)
-          }
-          if (options.includeBase) {
-            data.base = path.basename(newPath)
-          }
-          if (options.includeExt) {
-            data.ext = EXTENSIONS.JSON
-          }
-          if (options.includeOldBase) {
-            data.oldBase = oldBase
-          }
-          if (options.includeExt) {
-            data.oldExt = oldExt
-          }
-          // console.log('@@@', newPathObj);
-
-          writeFile(newPath, JSON.stringify(data), function(e, d) {
-            // console.log(e,d);
-          })
+          processingCallbackFunc(file, commonDir, err, data)
         })
       })
     })
   })
+
+  function processFileCallback(file, commonDir, err, data) {
+    const baseFilename = file.replace(commonDir, '')
+    // console.log(baseFilename, err, data)
+    const parsedPath = path.parse(path.join(options.outputDir, baseFilename))
+    const sourceExt = parsedPath.ext
+    const sourceBase = parsedPath.base
+    const newPathObj = Object.assign({}, parsedPath, {
+      ext: EXTENSIONS.JSON,
+      base: parsedPath.base.replace(sourceExt, EXTENSIONS.JSON)
+    })
+    const newPath = path.format(newPathObj)
+
+    if (options.includeDir) {
+      data.dir = path.dirname(newPath)
+    }
+    if (options.includeBase) {
+      data.base = path.basename(newPath)
+    }
+    if (options.includeExt) {
+      data.ext = EXTENSIONS.JSON
+    }
+    if (options.includeSourceBase) {
+      data.sourceBase = sourceBase
+    }
+    if (options.includeSourceExt) {
+      data.sourceExt = sourceExt
+    }
+    // console.log('@@@', newPathObj);
+
+    writeFile(newPath, JSON.stringify(data), function(e, d) {
+      // console.log(e,d);
+    })
+  }
 
   // Enable callback support too.
   if (callback) {
@@ -139,16 +146,33 @@ function processFile(file, cb) {
   })
 }
 
+
+
+function isMarkdown(data) {
+  return Boolean(data.bodyContent && data.bodyHtml)
+}
+
 function unProcessFile(file, cb) {
   if (fs.lstatSync(file).isDirectory()) {
     return
   }
   fs.readFile(file, (err, data) => {
     const fileContent = data.toString()
-    const fileData = yaml.safeLoad(fileContent)
+    const fileData = JSON.parse(fileContent)
+    console.log(file);
+    const parsedPath = path.parse(file)
+    console.log(parsedPath);
+    // const fileData = yaml.safeDump(fileContent)
+    console.log(fileData, isMarkdown(fileData));
+    if (isMarkdown(fileData)) {
+      console.log('@@@MD')
+      // writeFile()
+    } else {
 
-    console.log(fileData);
-    console.log(path.format(fileData));
+    }
+
+    // console.log(fileData);
+    // console.log(path.format(fileData));
     // const hasFrontmatter = fileContent.indexOf('---\n') === 0
     // const isYaml = file.endsWith('.yaml') || file.endsWith('.yml')
     // let content = fileContent.trim()
