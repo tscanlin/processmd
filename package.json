@@ -7,7 +7,7 @@
     "processto": "./cli.js"
   },
   "scripts": {
-    "lint": "prettier --write --single-quote --trailing-comma --no-semi *.js",
+    "prettier": "prettier --write --single-quote --trailing-comma --no-semi *.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

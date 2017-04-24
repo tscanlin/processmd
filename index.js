@@ -1,20 +1,22 @@
-'use strict';
+'use strict'
 
 const fs = require('fs')
 const globby = require('globby')
 const marked = require('marked')
 const yaml = require('js-yaml')
 
-marked.setOptions({
-  // renderer: new marked.Renderer(),
-  // gfm: true,
-  // tables: true,
-  // breaks: false,
-  // pedantic: false,
-  // sanitize: false,
-  // smartLists: true,
-  // smartypants: false
-});
+marked.setOptions(
+  {
+    // renderer: new marked.Renderer(),
+    // gfm: true,
+    // tables: true,
+    // breaks: false,
+    // pedantic: false,
+    // sanitize: false,
+    // smartLists: true,
+    // smartypants: false
+  }
+)
 
 const defaultOptions = require('./defaultOptions')
 
@@ -29,12 +31,11 @@ function processto(options, callback) {
   // }
 
   const p = new Promise(function(resolve, reject) {
-
     globby(files).then(function(result) {
       console.log(result)
       result.forEach(function(file) {
         processFile(file, function(err, data) {
-          console.log(err, data);
+          console.log(err, data)
           // writeFile()
         })
       })
@@ -43,7 +44,7 @@ function processto(options, callback) {
 
   // Enable callback support too.
   if (callback) {
-    p.then((result) => {
+    p.then(result => {
       callback(null, result)
     })
   }
@@ -80,16 +81,20 @@ function processFile(file, cb) {
       content = splitContent[1].trim()
     }
 
-    return cb(err, Object.assign({}, frontmatter, {
-      bodyContent: content,
-      bodyHtml: marked(content)
-    }))
+    return cb(
+      err,
+      Object.assign({}, frontmatter, {
+        bodyContent: content,
+        bodyHtml: marked(content),
+
+        // basename
+        // filename
+      })
+    )
   })
 }
 
-function writeFile(file, content, cb) {
-
-}
+function writeFile(file, content, cb) {}
 
 module.exports = {
   default: processto,
