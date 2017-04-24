@@ -15,7 +15,7 @@ const EXTENSIONS = {
 
 const SOURCE_MODE = 'source'
 
-const FRONTMATTER_SEPERATOR = '---\n'
+const FRONTMATTER_SEPERATOR = '---\r\n'
 
 marked.setOptions(
   {
@@ -53,6 +53,7 @@ function processto(options, callback) {
     }).then(function(result) {
       console.log(result)
       const commonDir = findCommonDir(result);
+      options._commonDir = commonDir
       const processingFunc = options.convertMode === SOURCE_MODE
         ? unProcessFile
         : processFile
@@ -61,46 +62,12 @@ function processto(options, callback) {
         : processFileCallback
 
       result.forEach(function(file) {
-        processingFunc(file, commonDir, function(err, data) {
-          processingCallbackFunc(file, EXTENSIONS.JSON, commonDir, data)
+        processingFunc(file, options, function(err, data) {
+          processingCallbackFunc(file, EXTENSIONS.JSON, options, data)
         })
       })
     })
   })
-
-  function processFileCallback(file, ext, commonDir, data) {
-    const baseFilename = file.replace(commonDir, '')
-    // console.log(baseFilename, err, data)
-    const parsedPath = path.parse(path.join(options.outputDir, baseFilename))
-    const sourceExt = parsedPath.ext
-    const sourceBase = parsedPath.base
-    const newPathObj = Object.assign({}, parsedPath, {
-      ext: ext,
-      base: parsedPath.base.replace(sourceExt, ext)
-    })
-    const newPath = path.format(newPathObj)
-
-    if (options.includeDir) {
-      data.dir = path.dirname(newPath)
-    }
-    if (options.includeBase) {
-      data.base = path.basename(newPath)
-    }
-    if (options.includeExt) {
-      data.ext = ext
-    }
-    if (options.includeSourceBase) {
-      data.sourceBase = sourceBase
-    }
-    if (options.includeSourceExt) {
-      data.sourceExt = sourceExt
-    }
-    // console.log('@@@', newPathObj);
-
-    writeFile(newPath, JSON.stringify(data), function(e, d) {
-      // console.log(e,d);
-    })
-  }
 
   // Enable callback support too.
   if (callback) {
@@ -112,7 +79,7 @@ function processto(options, callback) {
   return p
 }
 
-function processFile(file, commonDir, cb) {
+function processFile(file, options, cb) {
   if (fs.lstatSync(file).isDirectory()) {
     return
   }
@@ -150,70 +117,77 @@ function processFile(file, commonDir, cb) {
   })
 }
 
+function processFileCallback(file, ext, options, data) {
+  const baseFilename = file.replace(options._commonDir, '')
+  // console.log(baseFilename, err, data)
+  const parsedPath = path.parse(path.join(options.outputDir, baseFilename))
+  const sourceExt = parsedPath.ext
+  const sourceBase = parsedPath.base
+  const newPathObj = Object.assign({}, parsedPath, {
+    ext: ext,
+    base: parsedPath.base.replace(sourceExt, ext)
+  })
+  const newPath = path.format(newPathObj)
 
+  if (options.includeDir) {
+    data.dir = path.dirname(newPath)
+  }
+  if (options.includeBase) {
+    data.base = path.basename(newPath)
+  }
+  if (options.includeExt) {
+    data.ext = ext
+  }
+  if (options.includeSourceBase) {
+    data.sourceBase = sourceBase
+  }
+  if (options.includeSourceExt) {
+    data.sourceExt = sourceExt
+  }
+  // console.log('@@@', newPathObj);
 
-function isMarkdown(data) {
-  return Boolean(data.bodyContent && data.bodyHtml)
+  writeFile(newPath, JSON.stringify(data), function(e, d) {
+    // console.log(e,d);
+  })
 }
 
-function unProcessFile(file, commonDir, cb) {
+function unProcessFile(file, options, cb) {
   if (fs.lstatSync(file).isDirectory()) {
     return
   }
   fs.readFile(file, (err, data) => {
     const fileContent = data.toString()
     const fileData = JSON.parse(fileContent)
+    let newContent = ''
+
+    // const parsedPath = path.parse(file)
 
     console.log(file);
-    const parsedPath = path.parse(file)
-
-    // if (isMarkdown) {
+    const cleanProps = cleanFileProps(cleanMarkdownProps(Object.assign({}, fileData)))
+    const cleanYaml = yaml.safeDump(cleanProps)
+    let extension = '.yml'
+    if (isMarkdown(fileData)) {
+      newContent += fileData.bodyContent
+      if (Object.keys(cleanProps).length > 0) {
+        newContent = FRONTMATTER_SEPERATOR + cleanYaml + FRONTMATTER_SEPERATOR + '\n' + fileData.bodyContent
+      }
+      extension = '.md'
+    } else {
+      newContent = cleanYaml
+    }
     //
-    // }
-
-    // console.log(parsedPath);
-    // const yamlContent = yaml.safeDump(fileData)
-    // console.log(yamlContent, isMarkdown(fileData));
-
-
-    // console.log(fileData);
-    // console.log(path.format(fileData));
-    // const hasFrontmatter = fileContent.indexOf('---\n') === 0
-    // const isYaml = file.endsWith('.yaml') || file.endsWith('.yml')
-    // let content = fileContent.trim()
-    // let frontmatter = {}
-
-    // if (isYaml) {
-    //   // Callback for YAML.
-    //   return cb(err, Object.assign({}, data))
-    // }
-    //
-    // if (hasFrontmatter) {
-    //   let splitContent = fileContent.split('---\n')
-    //   // Remove first string in split content which is empty.
-    //   if (splitContent[0] === '') {
-    //     splitContent.shift()
-    //   }
-    //   frontmatter = yaml.safeLoad(splitContent[0])
-    //   content = splitContent[1].trim()
-    // }
-    //
-    // // Callback for markdown.
-    // return cb(
-    //   err,
-    //   Object.assign({}, frontmatter, {
-    //     bodyContent: content,
-    //     bodyHtml: marked(content),
-    //   })
-    // )
-  })
-}
-
-// Write a file making sure the directory exists first.
-function writeFile(file, content, cb) {
-  mkdirp(path.dirname(file), function(err) {
-    fs.writeFile(file, content, (e, data) => {
-      cb(e, data)
+    const baseFilename = file.replace(options._commonDir, '')
+    const parsedPath = path.parse(path.join(options.outputDir, baseFilename))
+    const sourceExt = parsedPath.ext
+    // const sourceBase = parsedPath.base
+    const newPathObj = Object.assign({}, parsedPath, {
+      ext: extension,
+      base: parsedPath.base.replace(sourceExt, extension)
+    })
+    const newPath = path.format(newPathObj)
+    console.log(newPath);
+    writeFile(newPath, newContent, function(e, d) {
+      console.log(e, d);
     })
   })
 }
@@ -231,6 +205,20 @@ function cleanMarkdownProps(obj) {
   delete obj.bodyContent
   delete obj.bodyHtml
   return obj
+}
+
+// Determine if its data for a markdown file.
+function isMarkdown(data) {
+  return Boolean(data.bodyContent && data.bodyHtml)
+}
+
+// Write a file making sure the directory exists first.
+function writeFile(file, content, cb) {
+  mkdirp(path.dirname(file), function(err) {
+    fs.writeFile(file, content, (e, data) => {
+      cb(e, data)
+    })
+  })
 }
 
 // Find the common parent directory given an array of files.
