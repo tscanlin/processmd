@@ -31,8 +31,9 @@ function processto(options, callback) {
   // }
 
   const p = new Promise(function(resolve, reject) {
+    console.log(files);
     globby(files, {
-      matchBase: true
+      // matchBase: true
     }).then(function(result) {
       console.log(result)
       result.forEach(function(file) {
