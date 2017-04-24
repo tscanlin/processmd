@@ -1,9 +1,15 @@
 'use strict'
 
 const fs = require('fs')
+const path = require('path')
 const globby = require('globby')
 const marked = require('marked')
 const yaml = require('js-yaml')
+const mkdirp = require('mkdirp')
+
+const EXTENSIONS = {
+  JSON: '.json'
+}
 
 marked.setOptions(
   {
@@ -25,21 +31,44 @@ function processto(options, callback) {
   options = Object.assign({}, defaultOptions, options)
   // options.ignore = ignoreList
 
-  const files = (options.files || []).concat(options._)
+  const globs = (options.files || []).concat(options._)
   // if ( !( (options.htmlRaw || options.html.length || options.webpages.length) && (options.cssRaw || options.css.length) ) ) {
   //   throw new Error('You must include HTML and CSS for input.')
   // }
 
   const p = new Promise(function(resolve, reject) {
-    console.log(files);
-    globby(files, {
+    console.log(globs);
+    globby(globs, {
       // matchBase: true
     }).then(function(result) {
       console.log(result)
+      const commonDir = findCommonDir(result);
       result.forEach(function(file) {
         processFile(file, function(err, data) {
-          console.log(err, data)
-          // writeFile()
+          const baseFilename = file.replace(commonDir, '')
+          console.log(baseFilename, err, data)
+          const parsedPath = path.parse(path.join(options.outputDir, baseFilename))
+          const oldExt = parsedPath.ext
+          const newPathObj = Object.assign({}, parsedPath, {
+            ext: EXTENSIONS.JSON,
+            base: parsedPath.base.replace(oldExt, EXTENSIONS.JSON)
+          })
+          const newPath = path.format(newPathObj)
+
+          if (options.includeDir) {
+            data.dir = path.dirname(newPath)
+          }
+          if (options.includeBase) {
+            data.base = path.basename(newPath)
+          }
+          if (options.includeExt) {
+            data.ext = oldExt
+          }
+          console.log('@@@', newPathObj);
+
+          writeFile(newPath, JSON.stringify(data), function(e, d) {
+            console.log(e,d);
+          })
         })
       })
     })
@@ -97,7 +126,21 @@ function processFile(file, cb) {
   })
 }
 
-function writeFile(file, content, cb) {}
+function writeFile(file, content, cb) {
+  // Make sure the directory for the file exists first.
+  mkdirp(path.dirname(file), function(err) {
+    fs.writeFile(file, content, (e, data) => {
+      console.log(file, content, err, data);
+    })
+  })
+}
+
+// Find the common parent directory given an array of files.
+function findCommonDir(files) {
+  return files.reduce(function(p, c) {
+    return !p ? c : p.split('').filter((letter, i) => letter === c[i]).join('')
+  }, null)
+}
 
 module.exports = {
   default: processto,
