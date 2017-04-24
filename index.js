@@ -59,6 +59,7 @@ function processto(options, callback) {
           // console.log(baseFilename, err, data)
           const parsedPath = path.parse(path.join(options.outputDir, baseFilename))
           const oldExt = parsedPath.ext
+          const oldBase = parsedPath.base
           const newPathObj = Object.assign({}, parsedPath, {
             ext: EXTENSIONS.JSON,
             base: parsedPath.base.replace(oldExt, EXTENSIONS.JSON)
@@ -72,7 +73,13 @@ function processto(options, callback) {
             data.base = path.basename(newPath)
           }
           if (options.includeExt) {
-            data.ext = oldExt
+            data.ext = EXTENSIONS.JSON
+          }
+          if (options.includeOldBase) {
+            data.oldBase = oldBase
+          }
+          if (options.includeExt) {
+            data.oldExt = oldExt
           }
           // console.log('@@@', newPathObj);
 
