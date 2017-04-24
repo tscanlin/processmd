@@ -17,6 +17,7 @@ const SOURCE_MODE = 'source'
 
 const FRONTMATTER_SEPERATOR = '---\r\n'
 
+
 marked.setOptions(
   {
     // renderer: new marked.Renderer(),
@@ -32,18 +33,13 @@ marked.setOptions(
 
 const defaultOptions = require('./defaultOptions')
 
+
 function processto(options, callback) {
-  // const ignoreList = defaultOptions.ignore.concat(options.ignore)
   options = Object.assign({}, defaultOptions, options)
-  // options.ignore = ignoreList
 
   const globs = (options.files || []).concat(options._)
   // if ( !( (options.htmlRaw || options.html.length || options.webpages.length) && (options.cssRaw || options.css.length) ) ) {
   //   throw new Error('You must include HTML and CSS for input.')
-  // }
-
-  // if (options.convertMode === SOURCE_MODE) {
-  //
   // }
 
   const p = new Promise(function(resolve, reject) {
@@ -57,24 +53,19 @@ function processto(options, callback) {
       const processingFunc = options.convertMode === SOURCE_MODE
         ? unProcessFile
         : processFile
-      const processingCallbackFunc = options.convertMode === SOURCE_MODE
-        ? () => {} //unProcessFileCallback
-        : processFileCallback
 
       result.forEach(function(file) {
-        processingFunc(file, options, function(err, data) {
-          processingCallbackFunc(file, EXTENSIONS.JSON, options, data)
-        })
+        processingFunc(file, options, function(err, data) { })
       })
     })
   })
 
   // Enable callback support too.
-  if (callback) {
-    p.then(result => {
-      callback(null, result)
-    })
-  }
+  // if (callback) {
+  //   p.then(result => {
+  //     callback(null, result)
+  //   })
+  // }
 
   return p
 }
@@ -89,13 +80,9 @@ function processFile(file, options, cb) {
     const isYaml = file.endsWith('.yaml') || file.endsWith('.yml')
     let content = fileContent.trim()
     let frontmatter = {}
+    let jsonData = {}
 
-    if (isYaml) {
-      const data = yaml.safeLoad(content)
-      // Callback for YAML.
-      return cb(err, Object.assign({}, data))
-    }
-
+    // Markdown.
     if (hasFrontmatter) {
       let splitContent = fileContent.split(FRONTMATTER_SEPERATOR)
       // Remove first string in split content which is empty.
@@ -106,48 +93,43 @@ function processFile(file, options, cb) {
       content = splitContent[1].trim()
     }
 
-    // Callback for markdown.
-    return cb(
-      err,
-      Object.assign({}, frontmatter, {
+    if (isYaml) {
+      jsonData = yaml.safeLoad(content)
+    } else {
+      jsonData = Object.assign({}, frontmatter, {
         bodyContent: content,
         bodyHtml: marked(content),
       })
-    )
-  })
-}
+    }
 
-function processFileCallback(file, ext, options, data) {
-  const baseFilename = file.replace(options._commonDir, '')
-  // console.log(baseFilename, err, data)
-  const parsedPath = path.parse(path.join(options.outputDir, baseFilename))
-  const sourceExt = parsedPath.ext
-  const sourceBase = parsedPath.base
-  const newPathObj = Object.assign({}, parsedPath, {
-    ext: ext,
-    base: parsedPath.base.replace(sourceExt, ext)
-  })
-  const newPath = path.format(newPathObj)
+    // Rename to the new file.
+    const baseFilename = file.replace(options._commonDir, '')
+    const parsedPath = path.parse(path.join(options.outputDir, baseFilename))
+    const sourceExt = parsedPath.ext
+    const sourceBase = parsedPath.base
+    const newPathObj = Object.assign({}, parsedPath, {
+      ext: EXTENSIONS.JSON,
+      base: parsedPath.base.replace(sourceExt, EXTENSIONS.JSON)
+    })
+    const newPath = path.format(newPathObj)
 
-  if (options.includeDir) {
-    data.dir = path.dirname(newPath)
-  }
-  if (options.includeBase) {
-    data.base = path.basename(newPath)
-  }
-  if (options.includeExt) {
-    data.ext = ext
-  }
-  if (options.includeSourceBase) {
-    data.sourceBase = sourceBase
-  }
-  if (options.includeSourceExt) {
-    data.sourceExt = sourceExt
-  }
-  // console.log('@@@', newPathObj);
+    if (options.includeDir) {
+      jsonData.dir = path.dirname(newPath)
+    }
+    if (options.includeBase) {
+      jsonData.base = path.basename(newPath)
+    }
+    if (options.includeExt) {
+      jsonData.ext = EXTENSIONS.JSON
+    }
+    if (options.includeSourceBase) {
+      jsonData.sourceBase = sourceBase
+    }
+    if (options.includeSourceExt) {
+      jsonData.sourceExt = sourceExt
+    }
 
-  writeFile(newPath, JSON.stringify(data), function(e, d) {
-    // console.log(e,d);
+    writeFile(newPath, JSON.stringify(jsonData), cb)
   })
 }
 
@@ -158,11 +140,9 @@ function unProcessFile(file, options, cb) {
   fs.readFile(file, (err, data) => {
     const fileContent = data.toString()
     const fileData = JSON.parse(fileContent)
+
+    // Process content.
     let newContent = ''
-
-    // const parsedPath = path.parse(file)
-
-    console.log(file);
     const cleanProps = cleanFileProps(cleanMarkdownProps(Object.assign({}, fileData)))
     const cleanYaml = yaml.safeDump(cleanProps)
     let extension = '.yml'
@@ -175,7 +155,8 @@ function unProcessFile(file, options, cb) {
     } else {
       newContent = cleanYaml
     }
-    //
+
+    // Rename to the new file.
     const baseFilename = file.replace(options._commonDir, '')
     const parsedPath = path.parse(path.join(options.outputDir, baseFilename))
     const sourceExt = parsedPath.ext
@@ -185,10 +166,8 @@ function unProcessFile(file, options, cb) {
       base: parsedPath.base.replace(sourceExt, extension)
     })
     const newPath = path.format(newPathObj)
-    console.log(newPath);
-    writeFile(newPath, newContent, function(e, d) {
-      console.log(e, d);
-    })
+
+    writeFile(newPath, newContent, cb)
   })
 }
 
