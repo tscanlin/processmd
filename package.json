@@ -9,6 +9,7 @@
   "scripts": {
     "prettier": "prettier --write --single-quote --trailing-comma --no-semi *.js",
     "start": "node cli.js \"test/data/input/**/*.{yml,md}\" --outputDir test/data/output",
+    "back": "node cli.js \"test/data/output/**/*.json\" --convertMode source --outputDir test/data/back",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

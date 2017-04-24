@@ -11,6 +11,8 @@ const EXTENSIONS = {
   JSON: '.json'
 }
 
+const SOURCE_MODE = 'source'
+
 marked.setOptions(
   {
     // renderer: new marked.Renderer(),
@@ -36,6 +38,10 @@ function processto(options, callback) {
   //   throw new Error('You must include HTML and CSS for input.')
   // }
 
+  // if (options.convertMode === SOURCE_MODE) {
+  //
+  // }
+
   const p = new Promise(function(resolve, reject) {
     console.log(globs);
     globby(globs, {
@@ -43,10 +49,14 @@ function processto(options, callback) {
     }).then(function(result) {
       console.log(result)
       const commonDir = findCommonDir(result);
+      const processingFunc = options.convertMode === SOURCE_MODE
+        ? unProcessFile
+        : processFile
+
       result.forEach(function(file) {
-        processFile(file, function(err, data) {
+        processingFunc(file, function(err, data) {
           const baseFilename = file.replace(commonDir, '')
-          console.log(baseFilename, err, data)
+          // console.log(baseFilename, err, data)
           const parsedPath = path.parse(path.join(options.outputDir, baseFilename))
           const oldExt = parsedPath.ext
           const newPathObj = Object.assign({}, parsedPath, {
@@ -64,10 +74,10 @@ function processto(options, callback) {
           if (options.includeExt) {
             data.ext = oldExt
           }
-          console.log('@@@', newPathObj);
+          // console.log('@@@', newPathObj);
 
           writeFile(newPath, JSON.stringify(data), function(e, d) {
-            console.log(e,d);
+            // console.log(e,d);
           })
         })
       })
@@ -85,14 +95,11 @@ function processto(options, callback) {
 }
 
 function processFile(file, cb) {
-  // console.log(file);
   if (fs.lstatSync(file).isDirectory()) {
-    // return cb(new Error(''))
     return
   }
   fs.readFile(file, (err, data) => {
     const fileContent = data.toString()
-    // console.log(fileContent);
     const hasFrontmatter = fileContent.indexOf('---\n') === 0
     const isYaml = file.endsWith('.yaml') || file.endsWith('.yml')
     let content = fileContent.trim()
@@ -100,6 +107,7 @@ function processFile(file, cb) {
 
     if (isYaml) {
       const data = yaml.safeLoad(content)
+      // Callback for YAML.
       return cb(err, Object.assign({}, data))
     }
 
@@ -113,24 +121,63 @@ function processFile(file, cb) {
       content = splitContent[1].trim()
     }
 
+    // Callback for markdown.
     return cb(
       err,
       Object.assign({}, frontmatter, {
         bodyContent: content,
         bodyHtml: marked(content),
-
-        // basename
-        // filename
       })
     )
   })
 }
 
+function unProcessFile(file, cb) {
+  if (fs.lstatSync(file).isDirectory()) {
+    return
+  }
+  fs.readFile(file, (err, data) => {
+    const fileContent = data.toString()
+    const fileData = yaml.safeLoad(fileContent)
+
+    console.log(fileData);
+    console.log(path.format(fileData));
+    // const hasFrontmatter = fileContent.indexOf('---\n') === 0
+    // const isYaml = file.endsWith('.yaml') || file.endsWith('.yml')
+    // let content = fileContent.trim()
+    // let frontmatter = {}
+
+    // if (isYaml) {
+    //   // Callback for YAML.
+    //   return cb(err, Object.assign({}, data))
+    // }
+    //
+    // if (hasFrontmatter) {
+    //   let splitContent = fileContent.split('---\n')
+    //   // Remove first string in split content which is empty.
+    //   if (splitContent[0] === '') {
+    //     splitContent.shift()
+    //   }
+    //   frontmatter = yaml.safeLoad(splitContent[0])
+    //   content = splitContent[1].trim()
+    // }
+    //
+    // // Callback for markdown.
+    // return cb(
+    //   err,
+    //   Object.assign({}, frontmatter, {
+    //     bodyContent: content,
+    //     bodyHtml: marked(content),
+    //   })
+    // )
+  })
+}
+
+// Write a file making sure the directory exists first.
 function writeFile(file, content, cb) {
-  // Make sure the directory for the file exists first.
   mkdirp(path.dirname(file), function(err) {
     fs.writeFile(file, content, (e, data) => {
-      console.log(file, content, err, data);
+      cb(e, data)
     })
   })
 }

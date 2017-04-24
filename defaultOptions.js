@@ -7,4 +7,6 @@ module.exports = {
   includeBase: true,
   // Include the extension as `ext` on the resulting json objects.
   includeExt: true,
+  // Convert mode. Possible options for this are 'json' or 'source'
+  convertMode: 'json'
 }
