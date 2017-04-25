@@ -1,12 +1,10 @@
 const spawn = require('child_process').spawn
 const processtoLib = require('./index')
 const processto = processtoLib.default
+
 const readFileContent = processtoLib._readFileContent
 const outputJson = require('./test/data/output.json')
 const backJson = require('./test/data/back.json')
-// _findCommonDir
-// _isMarkdown
-// console.log(outputJson)
 
 describe('processto', () => {
   it('should process a directory to JSON properly', (done) => {
@@ -42,8 +40,7 @@ describe('processto', () => {
 
     cli.stdout.on('data', (data) => {
       const parsedData = JSON.parse(data.toString())
-      console.log(JSON.stringify(parsedData));
-      // expect(parsedData).toEqual(backJson)
+      expect(parsedData).toEqual(backJson)
     })
 
     cli.on('close', (code) => {
@@ -52,7 +49,28 @@ describe('processto', () => {
     })
   })
 
+  it('#isMarkdown should properly determine markdown files', () => {
+    expect(processtoLib._isMarkdown({
+      bodyContent: 'Hi!',
+      bodyHtml: '<p>Hi!</p>'
+    })).toBe(true)
+  })
 
+  it('#isMarkdown should properly determine when files are NOT markdown files', () => {
+    expect(processtoLib._isMarkdown({
+      title: 'Foo',
+      someProp1: true,
+    })).toBe(false)
+  })
+
+  it('#findCommonDir should find the lowest common parent from an array of files', () => {
+    expect(processtoLib._findCommonDir([
+      "test/data/output/frontmatter.json",
+      "test/data/output/L1/L2/test2.json",
+      "test/data/output/L1/test.json",
+      "test/data/output/README.json"
+    ])).toBe('test/data/output/')
+  })
 })
 
 
