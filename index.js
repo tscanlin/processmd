@@ -73,11 +73,7 @@ function processto(options, callback) {
 }
 
 function processYamlAndMarkdown(file, options, cb) {
-  if (fs.lstatSync(file).isDirectory()) {
-    return
-  }
-  fs.readFile(file, (err, data) => {
-    const fileContent = data.toString()
+  readFileContent(file, (err, file, fileContent) => {
     const hasFrontmatter = fileContent.indexOf(FRONTMATTER_SEPERATOR) === 0
     const isYaml = file.endsWith('.yaml') || file.endsWith('.yml')
     let content = fileContent.trim()
@@ -132,19 +128,14 @@ function processYamlAndMarkdown(file, options, cb) {
     }
 
     // Todo make this a default callback
-    writeFile(newPath, JSON.stringify(jsonData), function(e, d) {
-      if (e) throw e
+    writeFileContent(newPath, JSON.stringify(jsonData), function(e, d) {
       cb(newPath, JSON.stringify(jsonData))
     })
   })
 }
 
 function processJson(file, options, cb) {
-  if (fs.lstatSync(file).isDirectory()) {
-    return
-  }
-  fs.readFile(file, (err, data) => {
-    const fileContent = data.toString()
+  readFileContent(file, (err, file, fileContent) => {
     const fileData = JSON.parse(fileContent)
 
     // Process content.
@@ -173,8 +164,7 @@ function processJson(file, options, cb) {
     })
     const newPath = path.format(newPathObj)
 
-    writeFile(newPath, newContent, function(e, d) {
-      if (e) throw e
+    writeFileContent(newPath, newContent, function(e, d) {
       cb(newPath, newContent)
     })
   })
@@ -195,18 +185,29 @@ function cleanMarkdownProps(obj) {
   return obj
 }
 
-// Determine if its data for a markdown file.
-function isMarkdown(data) {
-  return Boolean(data.bodyContent && data.bodyHtml)
+
+// Read a file making sure that it is not a directory first.
+function readFileContent(file, cb) {
+  if (fs.lstatSync(file).isDirectory()) {
+    return null
+  }
+  fs.readFile(file, (err, data) => {
+    cb(e, file, data && data.toString())
+  }
 }
 
 // Write a file making sure the directory exists first.
-function writeFile(file, content, cb) {
+function writeFileContent(file, content, cb) {
   mkdirp(path.dirname(file), function(err) {
     fs.writeFile(file, content, (e, data) => {
       cb(e, data)
     })
   })
+}
+
+// Determine if its data for a markdown file.
+function isMarkdown(data) {
+  return Boolean(data.bodyContent && data.bodyHtml)
 }
 
 // Find the common parent directory given an array of files.
@@ -218,6 +219,8 @@ function findCommonDir(files) {
 
 module.exports = {
   default: processto,
-  _findCommonDir: findCommonDir, // for testing.
+  _readFileContent: readFileContent, // for testing.
+  _writeFileContent: writeFileContent, // for testing.
   _isMarkdown: isMarkdown, // for testing.
+  _findCommonDir: findCommonDir, // for testing.
 }
