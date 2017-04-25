@@ -12,7 +12,7 @@ const EXTENSIONS = {
   MD: '.md',
   YML: '.yml',
 }
-const NEWLINE = '\n'
+const NEWLINE = '\r\n'
 const FRONTMATTER_SEPERATOR = '---\r\n'
 
 const SOURCE_MODE = 'source'
@@ -54,7 +54,7 @@ function processto(options, callback) {
           finishCount++
           summaryObj.fileMap[newFile] = content
 
-          if (finishCount === result.length - 1) {
+          if (finishCount === result.length) {
             resolve(summaryObj)
           }
         })
@@ -146,7 +146,7 @@ function processJson(file, options, cb) {
     if (isMarkdown(fileData)) {
       newContent += fileData.bodyContent + NEWLINE
       if (Object.keys(cleanProps).length > 0) {
-        newContent = FRONTMATTER_SEPERATOR + cleanYaml + FRONTMATTER_SEPERATOR + NEWLINE + fileData.bodyContent
+        newContent = FRONTMATTER_SEPERATOR + cleanYaml + FRONTMATTER_SEPERATOR + NEWLINE + newContent
       }
       extension = '.md'
     } else {
