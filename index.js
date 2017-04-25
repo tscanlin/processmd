@@ -192,8 +192,8 @@ function readFileContent(file, cb) {
     return null
   }
   fs.readFile(file, (err, data) => {
-    cb(e, file, data && data.toString())
-  }
+    cb(err, file, data && data.toString())
+  })
 }
 
 // Write a file making sure the directory exists first.
