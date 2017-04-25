@@ -15,6 +15,7 @@ const EXTENSIONS = {
 
 const SOURCE_MODE = 'source'
 
+const NEWLINE = '\n'
 const FRONTMATTER_SEPERATOR = '---\r\n'
 
 
@@ -147,9 +148,9 @@ function unProcessFile(file, options, cb) {
     const cleanYaml = yaml.safeDump(cleanProps)
     let extension = '.yml'
     if (isMarkdown(fileData)) {
-      newContent += fileData.bodyContent
+      newContent += fileData.bodyContent + NEWLINE
       if (Object.keys(cleanProps).length > 0) {
-        newContent = FRONTMATTER_SEPERATOR + cleanYaml + FRONTMATTER_SEPERATOR + '\n' + fileData.bodyContent
+        newContent = FRONTMATTER_SEPERATOR + cleanYaml + FRONTMATTER_SEPERATOR + NEWLINE + fileData.bodyContent
       }
       extension = '.md'
     } else {
