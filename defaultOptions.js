@@ -1,3 +1,4 @@
+
 module.exports = {
   // The directory output will be processed to.
   outputDir: './dist',
@@ -11,6 +12,8 @@ module.exports = {
   includeSourceBase: true,
   // Include the source extension (.md / .yml) as `sourceExt` on the resulting json objects.
   includeSourceExt: true,
-  // Convert mode. Possible options for this are 'json' or 'source'
-  convertMode: 'json'
+  // Convert mode. Possible options for this are 'json' or 'source'.
+  convertMode: 'json',
+  // Whether to output to stdout or not.
+  stdout: false,
 }

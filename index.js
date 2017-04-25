@@ -12,71 +12,67 @@ const EXTENSIONS = {
   MD: '.md',
   YML: '.yml',
 }
-
-const SOURCE_MODE = 'source'
-
 const NEWLINE = '\n'
 const FRONTMATTER_SEPERATOR = '---\r\n'
 
+const SOURCE_MODE = 'source'
 
-marked.setOptions(
-  {
-    // renderer: new marked.Renderer(),
-    // gfm: true,
-    // tables: true,
-    // breaks: false,
-    // pedantic: false,
-    // sanitize: false,
-    // smartLists: true,
-    // smartypants: false
-  }
-)
+marked.setOptions()
 
 const defaultOptions = require('./defaultOptions')
 
-
+// Main function
 function processto(options, callback) {
   options = Object.assign({}, defaultOptions, options)
 
   const globs = (options.files || []).concat(options._)
-  // if ( !( (options.htmlRaw || options.html.length || options.webpages.length) && (options.cssRaw || options.css.length) ) ) {
-  //   throw new Error('You must include HTML and CSS for input.')
-  // }
+  if (globs.length === 0) {
+    throw new Error('You must pass file patterns in to be processed.')
+  }
 
   const p = new Promise(function(resolve, reject) {
-    console.log(globs);
+    // console.log(globs);
     globby(globs, {
       // matchBase: true
     }).then(function(result) {
-      console.log(result)
+      // console.log(result)
       const commonDir = findCommonDir(result);
       options._commonDir = commonDir
-      let processingFunc = processFile
+      let processingFunc = processYamlAndMarkdown
       if (typeof options._customProcessingFunc === 'function') {
-        processingFunc = options._customProcessingFunc
+        processingFunc = options._customProcessingFunc // used for testing.
       } else if (options.convertMode === SOURCE_MODE) {
-        processingFunc = unProcessFile
+        processingFunc = processJson
       }
 
-      result.forEach(function(file) {
-        processingFunc(file, options, function(err, data) { })
-      })
+      const summaryObj = {}
+      summaryObj.fileMap = {}
+      summaryObj.sourceFileArray = result
+      let finishCount = 0
+      result.forEach(function(file, i) {
+        processingFunc(file, options, function(newFile, content) {
+          finishCount++
+          summaryObj.fileMap[newFile] = content
 
-      resolve(result)
+          if (finishCount === result.length - 1) {
+            resolve(summaryObj)
+          }
+        })
+      })
     })
   })
 
   // Enable callback support too.
-  // if (callback) {
-  //   p.then(result => {
-  //     callback(null, result)
-  //   })
-  // }
+  if (callback) {
+    p.then(result => {
+      callback(null, result)
+    })
+  }
 
   return p
 }
 
-function processFile(file, options, cb) {
+function processYamlAndMarkdown(file, options, cb) {
   if (fs.lstatSync(file).isDirectory()) {
     return
   }
@@ -135,11 +131,15 @@ function processFile(file, options, cb) {
       jsonData.sourceExt = sourceExt
     }
 
-    writeFile(newPath, JSON.stringify(jsonData), cb)
+    // Todo make this a default callback
+    writeFile(newPath, JSON.stringify(jsonData), function(e, d) {
+      if (e) throw e
+      cb(newPath, JSON.stringify(jsonData))
+    })
   })
 }
 
-function unProcessFile(file, options, cb) {
+function processJson(file, options, cb) {
   if (fs.lstatSync(file).isDirectory()) {
     return
   }
@@ -173,7 +173,10 @@ function unProcessFile(file, options, cb) {
     })
     const newPath = path.format(newPathObj)
 
-    writeFile(newPath, newContent, cb)
+    writeFile(newPath, newContent, function(e, d) {
+      if (e) throw e
+      cb(newPath, newContent)
+    })
   })
 }
 
