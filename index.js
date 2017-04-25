@@ -51,13 +51,18 @@ function processto(options, callback) {
       console.log(result)
       const commonDir = findCommonDir(result);
       options._commonDir = commonDir
-      const processingFunc = options.convertMode === SOURCE_MODE
-        ? unProcessFile
-        : processFile
+      let processingFunc = processFile
+      if (typeof options._customProcessingFunc === 'function') {
+        processingFunc = options._customProcessingFunc
+      } else if (options.convertMode === SOURCE_MODE) {
+        processingFunc = unProcessFile
+      }
 
       result.forEach(function(file) {
         processingFunc(file, options, function(err, data) { })
       })
+
+      resolve(result)
     })
   })
 
@@ -210,4 +215,6 @@ function findCommonDir(files) {
 
 module.exports = {
   default: processto,
+  _findCommonDir: findCommonDir, // for testing.
+  _isMarkdown: isMarkdown, // for testing.
 }

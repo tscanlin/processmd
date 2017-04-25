@@ -10,7 +10,7 @@
     "prettier": "prettier --write --single-quote --trailing-comma --no-semi *.js",
     "start": "node cli.js \"test/data/input/**/*.{yml,md}\" --outputDir test/data/output",
     "back": "node cli.js \"test/data/output/**/*.json\" --convertMode source --outputDir test/data/back",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "process",
@@ -28,6 +28,10 @@
     "yargs": "^7.1.0"
   },
   "devDependencies": {
+    "jest": "^19.0.2",
     "prettier": "^1.2.2"
+  },
+  "jest": {
+    "verbose": true
   }
 }
