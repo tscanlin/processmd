@@ -4,6 +4,8 @@ module.exports = {
   outputDir: './dist',
   // For markdown files how many characters should be included in an add `preview` property. 0 for no preview.
   preview: 0,
+  // Include the markdown document title as `title` on the resulting json objects.
+  includeTitle: true,
   // Include the directory as `dir` on the resulting json objects.
   includeDir: true,
   // Include the filename (.json) as `base` on the resulting json objects.
@@ -18,4 +20,6 @@ module.exports = {
   convertMode: 'json',
   // Whether to output to stdout or not.
   stdout: false,
+  // Custom markdown renderer function.
+  markdownRenderer: null,
 }

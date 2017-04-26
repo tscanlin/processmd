@@ -25,6 +25,8 @@ const defaultOptions = require('./defaultOptions')
 function processto(options, callback) {
   options = Object.assign({}, defaultOptions, options)
 
+  options.markdownRenderer = options.markdownRenderer || marked
+
   const globs = (options.files || []).concat(options._)
   if (globs.length === 0) {
     throw new Error('You must pass file patterns in to be processed.')
@@ -98,7 +100,7 @@ function processYamlAndMarkdown(file, options, cb) {
     } else {
       jsonData = Object.assign({}, frontmatter, {
         bodyContent: content,
-        bodyHtml: marked(content),
+        bodyHtml: options.markdownRenderer(content),
       })
     }
 
