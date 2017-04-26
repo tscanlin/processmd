@@ -4,6 +4,6 @@ draft: true
 num: 1
 ---
 
-# processto
+Some text that might be a title
 
 Process a directory of markdown *and* yaml files to JSON files
