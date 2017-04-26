@@ -20,7 +20,7 @@ npm install --save-dev processto
 You can then use the cli
 
 ```bash
-processto \"content/**/*.{yml,md}\" --stdout --outputDir output
+processto \"content/**/*.{yml,md}\" --outputDir output
 ```
 
 A markdown file such as this:
@@ -49,7 +49,7 @@ Would become this json:
 }
 ```
 
-Given the following input directory:
+And given the following input directory:
 ```bash
 .
 ├── L1
@@ -60,7 +60,7 @@ Given the following input directory:
 └── frontmatter.md
 ```
 
-It would produce this output directory:
+It would produce this directory output:
 ```bash
 .
 ├── L1
@@ -69,6 +69,30 @@ It would produce this output directory:
 │   └── test.json
 ├── README.json
 └── frontmatter.json
+```
+
+## Advanced Usage
+
+Processto will also output some summary data as a json object to stdout when used with the `--stdout` option. Then you can direct that to a file.
+
+```bash
+processto \"content/**/*.{yml,md}\" --stdout --outputDir output > summary.json
+```
+
+summary.json will contain:
+
+```
+{
+  "fileMap":{
+    "test/data/output/frontmatter.json":"{...}",
+    "test/data/output/L1/test.json":"{...}",
+    ...
+  }
+  "sourceFileArray":[
+    "test/data/input/frontmatter.md",
+    "test/data/input/L1/L2/test2.yml",
+    ...
+  }
 ```
 
 
@@ -97,3 +121,11 @@ module.exports = {
 }
 
 ```
+
+
+## Alternative options
+
+As you can imagine, there are a number of other projects that already accomplish similar functionality including: [markdown-to-json](https://github.com/scottstanfield/markdown-to-json), [md-to-json](https://www.npmjs.com/package/md-to-json), and [gulp-markdown-to-json](https://www.npmjs.com/package/gulp-markdown-to-json). But none of those quite fit my needs and I didn't want to require gulp just for this.
+
+
+Hope you enjoy!
