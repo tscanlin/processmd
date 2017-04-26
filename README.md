@@ -90,7 +90,7 @@ summary.json will contain:
   }
   "sourceFileArray":[
     "test/data/input/frontmatter.md",
-    "test/data/input/L1/L2/test2.yml",
+    "test/data/input/L1/test.yml",
     ...
   }
 ```
