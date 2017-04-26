@@ -199,6 +199,8 @@ function cleanFileProps(obj) {
 function cleanMarkdownProps(obj) {
   delete obj.bodyContent
   delete obj.bodyHtml
+  delete obj.preview
+  delete obj.title
   return obj
 }
 
