@@ -52,7 +52,9 @@ function processto(options, callback) {
       result.forEach(function(file, i) {
         processingFunc(file, options, function(newFile, content) {
           finishCount++
-          summaryObj.fileMap[newFile] = content
+          summaryObj.fileMap[newFile] = options.convertMode === SOURCE_MODE
+            ? content
+            : JSON.parse(content)
 
           if (finishCount === result.length) {
             resolve(summaryObj)
