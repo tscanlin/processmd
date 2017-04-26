@@ -12,8 +12,8 @@ const EXTENSIONS = {
   MD: '.md',
   YML: '.yml',
 }
-const NEWLINE = '\r\n'
-const FRONTMATTER_SEPERATOR = '---\r\n'
+const NEWLINE = '\n'
+const FRONTMATTER_SEPERATOR = '---\n'
 
 const SOURCE_MODE = 'source'
 

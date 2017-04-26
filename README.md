@@ -23,6 +23,53 @@ You can then use the cli
 processto \"content/**/*.{yml,md}\" --stdout --outputDir output
 ```
 
+A markdown file such as this:
+```
+---
+title: Frontmatter
+draft: true
+num: 1
+---
+
+# processto
+
+Process a directory of markdown *and* yaml files to JSON files
+```
+
+Would become this json:
+```
+{
+  "bodyContent":"--- title: Frontmatter draft: true num: 1 --- # processto Process a directory of markdown *and* yaml files to JSON files",
+  "bodyHtml":"<hr> <p>title: Frontmatter draft: true</p> <h2 id="num-1">num: 1</h2> <h1 id="processto">processto</h1> <p>Process a directory of markdown <em>and</em> yaml files to JSON files</p> ",
+  "dir":"test/data/output",
+  "base":"frontmatter.json",
+  "ext":".json",
+  "sourceBase":"frontmatter.md",
+  "sourceExt":".md"
+}
+```
+
+Given the following input directory:
+```bash
+.
+├── L1
+│   ├── L2
+│   │   └── test2.yml
+│   └── test.yml
+├── README.md
+└── frontmatter.md
+```
+
+It would produce this output directory:
+```bash
+.
+├── L1
+│   ├── L2
+│   │   └── test2.json
+│   └── test.json
+├── README.json
+└── frontmatter.json
+```
 
 
 ## Options
@@ -31,6 +78,8 @@ processto \"content/**/*.{yml,md}\" --stdout --outputDir output
 module.exports = {
   // The directory output will be processed to.
   outputDir: './dist',
+  // For markdown files how many characters should be included in an add `preview` property. 0 for no preview.
+  preview: 0,
   // Include the directory as `dir` on the resulting json objects.
   includeDir: true,
   // Include the filename (.json) as `base` on the resulting json objects.
@@ -46,4 +95,5 @@ module.exports = {
   // Whether to output to stdout or not.
   stdout: false,
 }
+
 ```
