@@ -111,6 +111,15 @@ function processYamlAndMarkdown(file, options, cb) {
     })
     const newPath = path.format(newPathObj)
 
+    if (options.preview > 0 && jsonData.bodyContent) {
+      jsonData.preview = jsonData.bodyHtml
+        .match(/<p>(.*?)<\/p>/)[1]
+      jsonData.preview = jsonData.preview
+        .split(/<[^>]*>/)
+        .join('')
+      jsonData.preview = jsonData.preview
+        .substring(0, options.preview) + '…'
+    }
     if (options.includeDir) {
       jsonData.dir = path.dirname(newPath)
     }

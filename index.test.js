@@ -72,18 +72,3 @@ describe('processto', () => {
     ])).toBe('test/data/output/')
   })
 })
-
-
-// function matchKeys(srcObj, testObj) {
-//   Object.keys(srcObj).forEach((key) => {
-//     try {
-//       const subKeys = Object.keys(srcObj[key])
-//       if (subKeys.length && typeof srcObj[key] === 'string') {
-//         matchKeys(srcObj[key], testObj[key])
-//       }
-//     } catch (e) {}
-//     if (typeof srcObj[key] === 'string') {
-//       expect(srcObj[key]).toEqual(testObj[key])
-//     }
-//   })
-// }

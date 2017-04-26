@@ -2,6 +2,8 @@
 module.exports = {
   // The directory output will be processed to.
   outputDir: './dist',
+  // For markdown files how many characters should be included in an add `preview` property. 0 for no preview.
+  preview: 0,
   // Include the directory as `dir` on the resulting json objects.
   includeDir: true,
   // Include the filename (.json) as `base` on the resulting json objects.
