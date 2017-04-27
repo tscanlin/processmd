@@ -240,8 +240,12 @@ function isMarkdown(data) {
 // Find the common parent directory given an array of files.
 function findCommonDir(files) {
   return files.reduce(function(p, c) {
+    // If it's a file not in any directory then just skip it by assigning the previous value.
+    if (c.indexOf('/') === -1) {
+      return p
+    }
     return !p ? c : p.split('').filter((letter, i) => letter === c[i]).join('')
-  }, null)
+  }, '')
 }
 
 module.exports = {
