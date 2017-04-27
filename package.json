@@ -1,6 +1,6 @@
 {
   "name": "processto",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Process a directory of markdown and yaml files to JSON files",
   "main": "index.js",
   "bin": {
