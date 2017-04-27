@@ -25,7 +25,7 @@ processto \"content/**/*.{yml,md}\" --outputDir output
 A markdown file such as this:
 ```
 ---
-title: Frontmatter
+test: frontmatter
 draft: true
 num: 1
 ---
@@ -38,8 +38,12 @@ Process a directory of markdown *and* yaml files to JSON files
 Would become this json:
 ```
 {
-  "bodyContent":"--- title: Frontmatter draft: true num: 1 --- # processto Process a directory of markdown *and* yaml files to JSON files",
-  "bodyHtml":"<hr> <p>title: Frontmatter draft: true</p> <h2 id="num-1">num: 1</h2> <h1 id="processto">processto</h1> <p>Process a directory of markdown <em>and</em> yaml files to JSON files</p> ",
+  "test":"frontmatter",
+  "draft":true,
+  "num":1,
+  "bodyContent":"# processto\r\n\r\nProcess a directory of markdown *and* yaml files to JSON files",
+  "bodyHtml":"<h1 id=\"processto\">processto</h1>\n<p>Process a directory of markdown <em>and</em> yaml files to JSON files</p>\n",
+  "title":"processto",
   "dir":"test/data/output",
   "base":"frontmatter.json",
   "ext":".json",
@@ -101,6 +105,8 @@ summary.json will contain:
 module.exports = {
   // The directory output will be processed to.
   outputDir: './dist',
+  // Prefix for output filenames, default is no prefix, just the original filename.
+  filenamePrefix: '',
   // For markdown files how many characters should be included in an add `preview` property. 0 for no preview.
   preview: 0,
   // Include the markdown document title as `title` on the resulting json objects.
