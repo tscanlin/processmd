@@ -17,7 +17,12 @@ const FRONTMATTER_SEPERATOR = '---' + NEWLINE
 
 const SOURCE_MODE = 'source'
 
-marked.setOptions()
+// Highlighting with highlight.js
+marked.setOptions({
+  highlight: function (code) {
+    return require('highlight.js').highlightAuto(code).value
+  }
+})
 
 const defaultOptions = require('./defaultOptions')
 
