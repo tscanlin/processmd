@@ -7,7 +7,7 @@ const outputJson = require('./test/data/output.json')
 const backJson = require('./test/data/back.json')
 
 describe('processto', () => {
-  it('should process a directory to JSON properly', (done) => {
+  it('should process a directory to JSON properly', done => {
     const cli = spawn('node', [
       './cli.js',
       'test/data/input/**/*.{yml,md}',
@@ -16,28 +16,35 @@ describe('processto', () => {
       'test/data/output',
     ])
 
-    cli.stdout.on('data', (data) => {
+    cli.stdout.on('data', data => {
       const parsedData = JSON.parse(data.toString())
       expect(parsedData.sourceFileArray).toEqual(outputJson.sourceFileArray)
-      Object.keys(parsedData.fileMap).forEach((key) => {
-        Object.keys(parsedData.fileMap[key]).forEach((prop) => {
-          if (typeof parsedData.fileMap[key][prop] === 'string' && (prop === 'bodyHtml' || prop === 'bodyContent')) {
+      Object.keys(parsedData.fileMap).forEach(key => {
+        Object.keys(parsedData.fileMap[key]).forEach(prop => {
+          if (
+            typeof parsedData.fileMap[key][prop] === 'string' &&
+            (prop === 'bodyHtml' || prop === 'bodyContent')
+          ) {
             // Fix for windows breaking tests with different newline character.
-            expect(parsedData.fileMap[key][prop].split('\r\n').join('\n')).toEqual(outputJson.fileMap[key][prop].split('\r\n').join('\n'))
+            expect(
+              parsedData.fileMap[key][prop].split('\r\n').join('\n')
+            ).toEqual(outputJson.fileMap[key][prop].split('\r\n').join('\n'))
           } else {
-            expect(parsedData.fileMap[key][prop]).toEqual(outputJson.fileMap[key][prop])
+            expect(parsedData.fileMap[key][prop]).toEqual(
+              outputJson.fileMap[key][prop]
+            )
           }
         })
       })
     })
 
-    cli.on('close', (code) => {
+    cli.on('close', code => {
       expect(code).toEqual(0)
       done()
     })
   })
 
-  it('should process a directory back to source properly', (done) => {
+  it('should process a directory back to source properly', done => {
     const cli = spawn('node', [
       './cli.js',
       'test/data/output/**/*.json',
@@ -48,40 +55,48 @@ describe('processto', () => {
       'test/data/back',
     ])
 
-    cli.stdout.on('data', (data) => {
+    cli.stdout.on('data', data => {
       const parsedData = JSON.parse(data.toString())
       expect(parsedData.sourceFileArray).toEqual(backJson.sourceFileArray)
-      Object.keys(parsedData.fileMap).forEach((key) => {
-        expect(parsedData.fileMap[key].split(/\s+/)).toEqual(backJson.fileMap[key].split(/\s+/))
+      Object.keys(parsedData.fileMap).forEach(key => {
+        expect(parsedData.fileMap[key].split(/\s+/)).toEqual(
+          backJson.fileMap[key].split(/\s+/)
+        )
       })
     })
 
-    cli.on('close', (code) => {
+    cli.on('close', code => {
       expect(code).toEqual(0)
       done()
     })
   })
 
   it('#isMarkdown should properly determine markdown files', () => {
-    expect(processtoLib._isMarkdown({
-      bodyContent: 'Hi!',
-      bodyHtml: '<p>Hi!</p>'
-    })).toBe(true)
+    expect(
+      processtoLib._isMarkdown({
+        bodyContent: 'Hi!',
+        bodyHtml: '<p>Hi!</p>',
+      })
+    ).toBe(true)
   })
 
   it('#isMarkdown should properly determine when files are NOT markdown files', () => {
-    expect(processtoLib._isMarkdown({
-      title: 'Foo',
-      someProp1: true,
-    })).toBe(false)
+    expect(
+      processtoLib._isMarkdown({
+        title: 'Foo',
+        someProp1: true,
+      })
+    ).toBe(false)
   })
 
   it('#findCommonDir should find the lowest common parent from an array of files', () => {
-    expect(processtoLib._findCommonDir([
-      "test/data/output/frontmatter.json",
-      "test/data/output/L1/L2/test2.json",
-      "test/data/output/L1/test.json",
-      "test/data/output/README.json"
-    ])).toBe('test/data/output/')
+    expect(
+      processtoLib._findCommonDir([
+        'test/data/output/frontmatter.json',
+        'test/data/output/L1/L2/test2.json',
+        'test/data/output/L1/test.json',
+        'test/data/output/README.json',
+      ])
+    ).toBe('test/data/output/')
   })
 })

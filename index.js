@@ -12,7 +12,7 @@ const EXTENSIONS = {
   MD: '.md',
   YML: '.yml',
 }
-const NEWLINE = (process.platform === 'win32' ? '\r\n' : '\n')
+const NEWLINE = process.platform === 'win32' ? '\r\n' : '\n'
 const FRONTMATTER_SEPERATOR = '---' + NEWLINE
 
 const SOURCE_MODE = 'source'
@@ -33,12 +33,8 @@ function processto(options, callback) {
   }
 
   const p = new Promise(function(resolve, reject) {
-    // console.log(globs);
-    globby(globs, {
-      // matchBase: true
-    }).then(function(result) {
-      // console.log(result)
-      const commonDir = findCommonDir(result);
+    globby(globs).then(function(result) {
+      const commonDir = findCommonDir(result)
       options._commonDir = commonDir
       let processingFunc = processYamlAndMarkdown
       if (typeof options._customProcessingFunc === 'function') {
@@ -113,23 +109,19 @@ function processYamlAndMarkdown(file, options, cb) {
     const sourceBase = parsedPath.base
     const newPathObj = Object.assign({}, parsedPath, {
       ext: EXTENSIONS.JSON,
-      base: options.filenamePrefix + parsedPath.base.replace(sourceExt, EXTENSIONS.JSON)
+      base: options.filenamePrefix +
+        parsedPath.base.replace(sourceExt, EXTENSIONS.JSON),
     })
     const newPath = path.format(newPathObj)
 
     if (options.preview > 0 && jsonData.bodyContent) {
       // TODO: These regular expressions could probably be better.
-      jsonData.preview = jsonData.bodyHtml
-        .match(/<p>(.*?)<\/p>/)[1]
-      jsonData.preview = jsonData.preview
-        .split(/<[^>]*>/)
-        .join('')
-      jsonData.preview = jsonData.preview
-        .substring(0, options.preview) + '…'
+      jsonData.preview = jsonData.bodyHtml.match(/<p>(.*?)<\/p>/)[1]
+      jsonData.preview = jsonData.preview.split(/<[^>]*>/).join('')
+      jsonData.preview = jsonData.preview.substring(0, options.preview) + '…'
     }
     if (options.includeTitle && jsonData.bodyContent) {
-      jsonData.title = jsonData.bodyHtml
-        .match(/>(.*?)<\//)[1]
+      jsonData.title = jsonData.bodyHtml.match(/>(.*?)<\//)[1]
     }
     if (options.includeDir) {
       jsonData.dir = replaceBackslashes(path.dirname(newPath))
@@ -160,13 +152,20 @@ function processJson(file, options, cb) {
 
     // Process content.
     let newContent = ''
-    const cleanProps = cleanFileProps(cleanMarkdownProps(Object.assign({}, fileData)))
+    const cleanProps = cleanFileProps(
+      cleanMarkdownProps(Object.assign({}, fileData))
+    )
     const cleanYaml = yaml.safeDump(cleanProps)
     let extension = '.yml'
     if (isMarkdown(fileData)) {
       newContent += fileData.bodyContent + NEWLINE
       if (Object.keys(cleanProps).length > 0) {
-        newContent = FRONTMATTER_SEPERATOR + cleanYaml + FRONTMATTER_SEPERATOR + NEWLINE + newContent
+        newContent =
+          FRONTMATTER_SEPERATOR +
+          cleanYaml +
+          FRONTMATTER_SEPERATOR +
+          NEWLINE +
+          newContent
       }
       extension = '.md'
     } else {
@@ -180,7 +179,8 @@ function processJson(file, options, cb) {
     // const sourceBase = parsedPath.base
     const newPathObj = Object.assign({}, parsedPath, {
       ext: extension,
-      base: options.filenamePrefix + parsedPath.base.replace(sourceExt, extension)
+      base: options.filenamePrefix +
+        parsedPath.base.replace(sourceExt, extension),
     })
     const newPath = path.format(newPathObj)
 
@@ -206,7 +206,6 @@ function cleanMarkdownProps(obj) {
   delete obj.title
   return obj
 }
-
 
 // Read a file making sure that it is not a directory first.
 function readFileContent(file, cb) {
