@@ -12,8 +12,8 @@ const EXTENSIONS = {
   MD: '.md',
   YML: '.yml',
 }
-const NEWLINE = '\n'
-const FRONTMATTER_SEPERATOR = '---\n'
+const NEWLINE = (process.platform === 'win32' ? '\r\n' : '\n')
+const FRONTMATTER_SEPERATOR = '---' + NEWLINE
 
 const SOURCE_MODE = 'source'
 
@@ -54,7 +54,9 @@ function processto(options, callback) {
       result.forEach(function(file, i) {
         processingFunc(file, options, function(newFile, content) {
           finishCount++
-          summaryObj.fileMap[newFile] = options.convertMode === SOURCE_MODE
+          // Replace backslashes with forward slashes to keep windows consistent.
+          const filename = replaceBackslashes(newFile)
+          summaryObj.fileMap[filename] = options.convertMode === SOURCE_MODE
             ? content
             : JSON.parse(content)
 
@@ -116,6 +118,7 @@ function processYamlAndMarkdown(file, options, cb) {
     const newPath = path.format(newPathObj)
 
     if (options.preview > 0 && jsonData.bodyContent) {
+      // TODO: These regular expressions could probably be better.
       jsonData.preview = jsonData.bodyHtml
         .match(/<p>(.*?)<\/p>/)[1]
       jsonData.preview = jsonData.preview
@@ -129,7 +132,7 @@ function processYamlAndMarkdown(file, options, cb) {
         .match(/>(.*?)<\//)[1]
     }
     if (options.includeDir) {
-      jsonData.dir = path.dirname(newPath)
+      jsonData.dir = replaceBackslashes(path.dirname(newPath))
     }
     if (options.includeBase) {
       jsonData.base = path.basename(newPath)
@@ -222,6 +225,11 @@ function writeFileContent(file, content, cb) {
       cb(e, data)
     })
   })
+}
+
+// Replace backslashes for windows paths.
+function replaceBackslashes(str) {
+  return str.split('\\').join('/')
 }
 
 // Determine if its data for a markdown file.

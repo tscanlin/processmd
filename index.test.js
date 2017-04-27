@@ -18,7 +18,17 @@ describe('processto', () => {
 
     cli.stdout.on('data', (data) => {
       const parsedData = JSON.parse(data.toString())
-      expect(parsedData).toEqual(outputJson)
+      expect(parsedData.sourceFileArray).toEqual(outputJson.sourceFileArray)
+      Object.keys(parsedData.fileMap).forEach((key) => {
+        Object.keys(parsedData.fileMap[key]).forEach((prop) => {
+          if (typeof parsedData.fileMap[key][prop] === 'string' && (prop === 'bodyHtml' || prop === 'bodyContent')) {
+            // Fix for windows breaking tests with different newline character.
+            expect(parsedData.fileMap[key][prop].split('\r\n').join('\n')).toEqual(outputJson.fileMap[key][prop].split('\r\n').join('\n'))
+          } else {
+            expect(parsedData.fileMap[key][prop]).toEqual(outputJson.fileMap[key][prop])
+          }
+        })
+      })
     })
 
     cli.on('close', (code) => {
@@ -40,7 +50,10 @@ describe('processto', () => {
 
     cli.stdout.on('data', (data) => {
       const parsedData = JSON.parse(data.toString())
-      expect(parsedData).toEqual(backJson)
+      expect(parsedData.sourceFileArray).toEqual(backJson.sourceFileArray)
+      Object.keys(parsedData.fileMap).forEach((key) => {
+        expect(parsedData.fileMap[key].split(/\s+/)).toEqual(backJson.fileMap[key].split(/\s+/))
+      })
     })
 
     cli.on('close', (code) => {
