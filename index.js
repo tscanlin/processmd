@@ -113,7 +113,7 @@ function processYamlAndMarkdown(file, options, cb) {
     const sourceBase = parsedPath.base
     const newPathObj = Object.assign({}, parsedPath, {
       ext: EXTENSIONS.JSON,
-      base: parsedPath.base.replace(sourceExt, EXTENSIONS.JSON)
+      base: options.filenamePrefix + parsedPath.base.replace(sourceExt, EXTENSIONS.JSON)
     })
     const newPath = path.format(newPathObj)
 
@@ -180,7 +180,7 @@ function processJson(file, options, cb) {
     // const sourceBase = parsedPath.base
     const newPathObj = Object.assign({}, parsedPath, {
       ext: extension,
-      base: parsedPath.base.replace(sourceExt, extension)
+      base: options.filenamePrefix + parsedPath.base.replace(sourceExt, extension)
     })
     const newPath = path.format(newPathObj)
 

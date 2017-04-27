@@ -2,6 +2,8 @@
 module.exports = {
   // The directory output will be processed to.
   outputDir: './dist',
+  // Prefix for output filenames, default is no prefix, just the original filename.
+  filenamePrefix: '',
   // For markdown files how many characters should be included in an add `preview` property. 0 for no preview.
   preview: 0,
   // Include the markdown document title as `title` on the resulting json objects.
