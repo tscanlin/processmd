@@ -19,7 +19,7 @@ npm install --save-dev processto
 You can then use the cli
 
 ```bash
-processto \"content/**/*.{yml,md}\" --outputDir output
+processto "content/**/*.{yml,md}" --outputDir output
 ```
 
 A markdown file such as this:

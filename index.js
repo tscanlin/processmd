@@ -139,8 +139,9 @@ function processYamlAndMarkdown(file, options, cb) {
       jsonData.sourceExt = sourceExt
     }
 
-    // Todo make this a default callback
-    writeFileContent(newPath, JSON.stringify(jsonData), function(e, d) {
+    // TODO: make this a default callback
+    // 2 spaces indent for stringify.
+    writeFileContent(newPath, JSON.stringify(jsonData, null, 2), function(e, d) {
       cb(newPath, JSON.stringify(jsonData))
     })
   })
