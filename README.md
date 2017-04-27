@@ -1,5 +1,7 @@
 # processto
 
+![Build Status](https://travis-ci.org/tscanlin/processto.svg?branch=master)
+
 Processto uses [globby](https://github.com/sindresorhus/globby) to process directories of markdown and yaml files to a mirrored tree of JSON files. Additionally, with the `convertMode: "source"` option you can convert back from json to the input markdown and yaml files. This is mostly useful for blogs or static content for websites or other places where json is used but the readability of yaml is useful.
 
 
