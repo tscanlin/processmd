@@ -11,7 +11,8 @@ if (process.argv && process.argv.length > 2) {
 
   processto(options, (err, data) => {
     if (options.stdout) {
-      process.stdout.write(JSON.stringify(data))
+      // Indent JSON 2 spaces.
+      process.stdout.write(JSON.stringify(data, null, 2))
     }
   })
 } else {

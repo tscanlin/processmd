@@ -59,8 +59,8 @@ describe('processto', () => {
       const parsedData = JSON.parse(data.toString())
       expect(parsedData.sourceFileArray).toEqual(backJson.sourceFileArray)
       Object.keys(parsedData.fileMap).forEach(key => {
-        expect(parsedData.fileMap[key].split(/\s+/)).toEqual(
-          backJson.fileMap[key].split(/\s+/)
+        expect(parsedData.fileMap[key].split('\r\n').join('\n')).toEqual(
+          backJson.fileMap[key]
         )
       })
     })
