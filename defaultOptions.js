@@ -1,6 +1,8 @@
 module.exports = {
   // The directory output will be processed to.
   outputDir: './dist',
+  // Watch mode, recompile on file changes.
+  watch: false,
   // Prefix for output filenames, default is no prefix, just the original filename.
   filenamePrefix: '',
   // For markdown files how many characters should be included in an add `preview` property. 0 for no preview.

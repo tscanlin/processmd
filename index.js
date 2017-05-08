@@ -41,6 +41,17 @@ function processto(options, callback) {
     globby(globs).then(function(result) {
       const commonDir = findCommonDir(result)
       options._commonDir = commonDir
+
+      if (options.watch) {
+        const d = debounce(function() {
+          processOutput()
+        }, 200, true)
+
+        fs.watch(commonDir, function (event, filename) {
+          d()
+        })
+      }
+
       let processingFunc = processYamlAndMarkdown
       if (typeof options._customProcessingFunc === 'function') {
         processingFunc = options._customProcessingFunc // used for testing.
@@ -48,24 +59,28 @@ function processto(options, callback) {
         processingFunc = processJson
       }
 
-      const summaryObj = {}
-      summaryObj.fileMap = {}
-      summaryObj.sourceFileArray = result
-      let finishCount = 0
-      result.forEach(function(file, i) {
-        processingFunc(file, options, function(newFile, content) {
-          finishCount++
-          // Replace backslashes with forward slashes to keep windows consistent.
-          const filename = replaceBackslashes(newFile)
-          summaryObj.fileMap[filename] = options.convertMode === SOURCE_MODE
-            ? content
-            : JSON.parse(content)
+      function processOutput() {
+        const summaryObj = {}
+        summaryObj.fileMap = {}
+        summaryObj.sourceFileArray = result
+        let finishCount = 0
+        result.forEach(function(file, i) {
+          processingFunc(file, options, function(newFile, content) {
+            finishCount++
+            // Replace backslashes with forward slashes to keep windows consistent.
+            const filename = replaceBackslashes(newFile)
+            summaryObj.fileMap[filename] = options.convertMode === SOURCE_MODE
+              ? content
+              : JSON.parse(content)
 
-          if (finishCount === result.length) {
-            resolve(summaryObj)
-          }
+            if (finishCount === result.length) {
+              resolve(summaryObj)
+            }
+          })
         })
-      })
+      }
+
+      processOutput()
     })
   })
 
@@ -251,6 +266,22 @@ function findCommonDir(files) {
     }
     return !p ? c : p.split('').filter((letter, i) => letter === c[i]).join('')
   }, '')
+}
+
+// Debounce from: https://davidwalsh.name/function-debounce
+function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
 }
 
 module.exports = {
