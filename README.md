@@ -22,7 +22,13 @@ You can then use the cli
 processto "content/**/*.{yml,md}" --outputDir output
 ```
 
-A markdown file such as this:
+And watch files to automatically recompile them.
+
+```bash
+processto "content/**/*.{yml,md}" --outputDir output --watch
+```
+
+With an input markdown file such as this:
 ```
 ---
 test: frontmatter
@@ -35,7 +41,7 @@ num: 1
 Process a directory of markdown *and* yaml files to JSON files
 ```
 
-Would become this json:
+This would be the resulting JSON:
 ```
 {
   "test":"frontmatter",
@@ -132,10 +138,4 @@ module.exports = {
 }
 ```
 
-
-## Alternative options
-
-As you can imagine, there are a number of other projects that already accomplish similar functionality including: [markdown-to-json](https://github.com/scottstanfield/markdown-to-json), [md-to-json](https://www.npmjs.com/package/md-to-json), and [gulp-markdown-to-json](https://www.npmjs.com/package/gulp-markdown-to-json). But none of those quite fit my needs and I didn't want to require gulp just for this.
-
-
-Hope you enjoy!
+Enjoy!
