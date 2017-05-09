@@ -6,6 +6,7 @@ const globby = require('globby')
 const marked = require('marked')
 const yaml = require('js-yaml')
 const mkdirp = require('mkdirp')
+const defaultOptions = require('./defaultOptions')
 
 const EXTENSIONS = {
   JSON: '.json',
@@ -17,9 +18,6 @@ const FRONTMATTER_SEPERATOR = '---' + NEWLINE
 
 const SOURCE_MODE = 'source'
 
-// Highlighting with highlight.js
-
-const defaultOptions = require('./defaultOptions')
 
 // Main function
 function processto(options, callback) {
@@ -31,7 +29,7 @@ function processto(options, callback) {
     try {
       markedOptions = {
         highlight: function (code) {
-          return options.highlightCode(code)
+          return require('highlight.js').highlightAuto(code).value
         }
       }
     } catch (e) {
@@ -57,9 +55,14 @@ function processto(options, callback) {
           processOutput()
         }, 200, true)
 
-        fs.watch(commonDir, function (event, filename) {
-          d()
-        })
+        // fs.watch isn't supported on linux.
+        try {
+          fs.watch(commonDir, function (event, filename) {
+            d()
+          })
+        } catch (e) {
+          console.log(e);
+        }
       }
 
       let processingFunc = processYamlAndMarkdown
