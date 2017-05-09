@@ -18,17 +18,23 @@ const FRONTMATTER_SEPERATOR = '---' + NEWLINE
 const SOURCE_MODE = 'source'
 
 // Highlighting with highlight.js
-marked.setOptions({
-  highlight: function (code) {
-    return require('highlight.js').highlightAuto(code).value
-  }
-})
 
 const defaultOptions = require('./defaultOptions')
 
 // Main function
 function processto(options, callback) {
   options = Object.assign({}, defaultOptions, options)
+
+  // Init marked.
+  let markedOptions = {}
+  if (options.highlightCode) {
+    markedOptions = {
+      highlight: function (code) {
+        return require('highlight.js').highlightAuto(code).value
+      }
+    }
+  }
+  marked.setOptions(markedOptions)
 
   options.markdownRenderer = options.markdownRenderer || marked
 
