@@ -247,6 +247,7 @@ function readFileContent(file, cb) {
     return null
   }
   fs.readFile(file, (err, data) => {
+    if (err) console.log('file: ' + file, err)
     cb(err, file, data && data.toString())
   })
 }
