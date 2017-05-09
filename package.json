@@ -11,9 +11,9 @@
     "start": "node cli.js \"test/data/input/**/*.{yml,md}\" --stdout --outputDir test/data/output",
     "back": "node cli.js \"test/data/output/**/*.json\" --stdout --convertMode source --outputDir test/data/input",
     "test": "jasmine",
-    "v-patch": "npm version patch && git push --tags && npm publish",
-    "v-minor": "npm version minor && git push --tags && npm publish",
-    "v-major": "npm version major && git push --tags && npm publish"
+    "v-patch": "npm version patch && git push --tags && npm publish && git push",
+    "v-minor": "npm version minor && git push --tags && npm publish && git push",
+    "v-major": "npm version major && git push --tags && npm publish && git push"
   },
   "keywords": [
     "process",
