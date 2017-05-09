@@ -10,6 +10,9 @@ if (process.argv && process.argv.length > 2) {
   const options = Object.assign({}, defaultOptions, argv)
 
   processto(options, (err, data) => {
+    if (err) {
+      process.stderr.write(JSON.stringify(err))
+    }
     if (options.stdout) {
       // Indent JSON 2 spaces.
       process.stdout.write(JSON.stringify(data, null, 2))
