@@ -1,5 +1,6 @@
 {
   "fileMap": {
+    "test/data/back/frontmatter-code.md": "---\ntest: frontmatter\ndraft: true\nnum: 1\n---\n\nSome text that might be a title\n\nProcess a directory of markdown *and* yaml files to JSON files\n\n```js\nfunction doStuff() {\n  var a = 1 + 2\n  console.log(a)\n}\n```\n",
     "test/data/back/frontmatter.md": "---\ntest: frontmatter\ndraft: true\nnum: 1\n---\n\n# processto\n\nProcess a directory of markdown *and* yaml files to JSON files\n",
     "test/data/back/frontmatter2.md": "---\ntest: frontmatter\ndraft: true\nnum: 1\n---\n\nSome text that might be a title\n\nProcess a directory of markdown *and* yaml files to JSON files\n",
     "test/data/back/L1/L2/test2.yml": "name: yaml2\ndeep: true\ncount: 10000\n",
@@ -7,6 +8,7 @@
     "test/data/back/README.md": "# processto\n\nProcess a directory of markdown and yaml files to JSON files\n"
   },
   "sourceFileArray": [
+    "test/data/output/frontmatter-code.json",
     "test/data/output/frontmatter.json",
     "test/data/output/frontmatter2.json",
     "test/data/output/L1/L2/test2.json",

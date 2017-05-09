@@ -19,9 +19,9 @@ const SOURCE_MODE = 'source'
 
 // Highlighting with highlight.js
 marked.setOptions({
-  // highlight: function (code) {
-  //   return require('highlight.js').highlightAuto(code).value
-  // }
+  highlight: function (code) {
+    return require('highlight.js').highlightAuto(code).value
+  }
 })
 
 const defaultOptions = require('./defaultOptions')
