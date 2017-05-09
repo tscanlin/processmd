@@ -50,20 +50,20 @@ function processto(options, callback) {
       const commonDir = findCommonDir(result)
       options._commonDir = commonDir
 
-      if (options.watch) {
-        const d = debounce(function() {
-          processOutput()
-        }, 200, true)
-
-        // fs.watch isn't supported on linux.
-        try {
-          fs.watch(commonDir, function (event, filename) {
-            d()
-          })
-        } catch (e) {
-          console.log(e);
-        }
-      }
+      // if (options.watch) {
+      //   const d = debounce(function() {
+      //     processOutput()
+      //   }, 200, true)
+      //
+      //   // fs.watch isn't supported on linux.
+      //   try {
+      //     fs.watch(commonDir, function (event, filename) {
+      //       d()
+      //     })
+      //   } catch (e) {
+      //     console.log(e);
+      //   }
+      // }
 
       let processingFunc = processYamlAndMarkdown
       if (typeof options._customProcessingFunc === 'function') {
@@ -243,11 +243,10 @@ function cleanMarkdownProps(obj) {
 
 // Read a file making sure that it is not a directory first.
 function readFileContent(file, cb) {
-  if (fs.lstatSync(file).isDirectory()) {
+  if (!file || fs.lstatSync(file).isDirectory()) {
     return null
   }
   fs.readFile(file, (err, data) => {
-    if (err) console.log('file: ' + file, err)
     cb(err, file, data && data.toString())
   })
 }
