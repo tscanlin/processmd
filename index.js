@@ -28,10 +28,14 @@ function processto(options, callback) {
   // Init marked.
   let markedOptions = {}
   if (options.highlightCode) {
-    markedOptions = {
-      highlight: function (code) {
-        return require('highlight.js').highlightAuto(code).value
+    try {
+      markedOptions = {
+        highlight: function (code) {
+          return require('highlight.js').highlightAuto(code).value
+        }
       }
+    } catch (e) {
+      console.log(e);
     }
   }
   marked.setOptions(markedOptions)
