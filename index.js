@@ -25,17 +25,17 @@ function processto(options, callback) {
 
   // Init marked.
   let markedOptions = {}
-  if (options.highlightCode) {
-    try {
-      markedOptions = {
-        highlight: function (code) {
-          return require('highlight.js').highlightAuto(code).value
-        }
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  // if (options.highlightCode) {
+  //   try {
+  //     markedOptions = {
+  //       highlight: function (code) {
+  //         return require('highlight.js').highlightAuto(code).value
+  //       }
+  //     }
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }
   marked.setOptions(markedOptions)
 
   options.markdownRenderer = options.markdownRenderer || marked
