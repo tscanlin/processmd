@@ -31,7 +31,7 @@ function processto(options, callback) {
     try {
       markedOptions = {
         highlight: function (code) {
-          return require('highlight.js').highlightAuto(code).value
+          return options.highlightCode(code)
         }
       }
     } catch (e) {
