@@ -5,7 +5,7 @@
       "draft": true,
       "num": 1,
       "bodyContent": "Some text that might be a title\r\n\r\nProcess a directory of markdown *and* yaml files to JSON files\r\n\r\n```js\r\nfunction doStuff() {\r\n  var a = 1 + 2\r\n  console.log(a)\r\n}\r\n```",
-      "bodyHtml": "<p>Some text that might be a title</p>\n<p>Process a directory of markdown <em>and</em> yaml files to JSON files</p>\n<pre><code class=\"lang-js\">function doStuff() {\n  var a = 1 + 2\n  console.log(a)\n}\n</code></pre>\n",
+      "bodyHtml": "<p>Some text that might be a title</p>\n<p>Process a directory of markdown <em>and</em> yaml files to JSON files</p>\n<pre><code class=\"lang-js\"><span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">doStuff</span>(<span class=\"hljs-params\"></span>) </span>{\n  <span class=\"hljs-keyword\">var</span> a = <span class=\"hljs-number\">1</span> + <span class=\"hljs-number\">2</span>\n  <span class=\"hljs-built_in\">console</span>.log(a)\n}\n</code></pre>\n",
       "title": "Some text that might be a title",
       "dir": "test/data/output",
       "base": "frontmatter-code.json",

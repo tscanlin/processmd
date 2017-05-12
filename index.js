@@ -25,17 +25,17 @@ function processto(options, callback) {
 
   // Init marked.
   let markedOptions = {}
-  // if (options.highlightCode) {
-  //   try {
-  //     markedOptions = {
-  //       highlight: function (code) {
-  //         return require('highlight.js').highlightAuto(code).value
-  //       }
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
+  if (options.highlightCode) {
+    try {
+      markedOptions = {
+        highlight: function (code) {
+          return require('highlight.js').highlightAuto(code).value
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
   marked.setOptions(markedOptions)
 
   options.markdownRenderer = options.markdownRenderer || marked
@@ -50,20 +50,20 @@ function processto(options, callback) {
       const commonDir = findCommonDir(result)
       options._commonDir = commonDir
 
-      // if (options.watch) {
-      //   const d = debounce(function() {
-      //     processOutput()
-      //   }, 200, true)
-      //
-      //   // fs.watch isn't supported on linux.
-      //   try {
-      //     fs.watch(commonDir, function (event, filename) {
-      //       d()
-      //     })
-      //   } catch (e) {
-      //     console.log(e);
-      //   }
-      // }
+      if (options.watch) {
+        const d = debounce(function() {
+          processOutput()
+        }, 200, true)
+
+        // fs.watch isn't supported on linux.
+        try {
+          fs.watch(commonDir, function (event, filename) {
+            d()
+          })
+        } catch (e) {
+          console.log(e);
+        }
+      }
 
       let processingFunc = processYamlAndMarkdown
       if (typeof options._customProcessingFunc === 'function') {
