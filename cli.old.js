@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env node 
 
 const processto = require('./index.js').default
 const defaultOptions = require('./defaultOptions.js')

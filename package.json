@@ -9,6 +9,8 @@
   "scripts": {
     "prettier": "prettier --write --single-quote --trailing-comma --no-semi *.js",
     "start": "node cli.js \"test/data/input/**/*.{yml,md}\" --stdout --outputDir test/data/output",
+    "build": "npm run fix-line-endings",
+    "fix-line-endings": "mv cli.js cli.old.js && cat cli.old.js | tr -d '\r' > cli.js",
     "back": "node cli.js \"test/data/output/**/*.json\" --stdout --convertMode source --outputDir test/data/input",
     "test": "jasmine",
     "v-patch": "npm version patch && git push --tags && npm publish && git push",
