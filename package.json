@@ -1,10 +1,10 @@
 {
-  "name": "processto",
+  "name": "processmd",
   "version": "1.8.0",
   "description": "Process a directory of markdown and yaml files to JSON files",
   "main": "index.js",
   "bin": {
-    "processto": "./cli.js"
+    "processmd": "./cli.js"
   },
   "scripts": {
     "prettier": "prettier --write --single-quote --trailing-comma --no-semi *.js",

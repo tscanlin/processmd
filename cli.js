@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const processto = require('./index.js').default
+const processmd = require('./index.js').default
 const defaultOptions = require('./defaultOptions.js')
 // prettier-ignore
 const argv = require('yargs')
@@ -9,7 +9,7 @@ const argv = require('yargs')
 if (process.argv && process.argv.length > 2) {
   const options = Object.assign({}, defaultOptions, argv)
 
-  processto(options, (err, data) => {
+  processmd(options, (err, data) => {
     if (err) {
       process.stderr.write(JSON.stringify(err))
     }
