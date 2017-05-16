@@ -1,8 +1,8 @@
-# processto
+# processmd
 
-![Build Status](https://travis-ci.org/tscanlin/processto.svg?branch=master)
+![Build Status](https://travis-ci.org/tscanlin/processmd.svg?branch=master)
 
-Processto uses [globby](https://github.com/sindresorhus/globby) to process directories of markdown and yaml files to a mirrored tree of JSON files. Additionally, with the `convertMode: "source"` option you can convert back from json to the input markdown and yaml files. This is mostly useful for blogs or static content for websites or other places where json is used but the readability of yaml is useful.
+processmd uses [globby](https://github.com/sindresorhus/globby) to process directories of markdown and yaml files to a mirrored tree of JSON files. Additionally, with the `convertMode: "source"` option you can convert back from json to the input markdown and yaml files. This is mostly useful for blogs or static content for websites or other places where json is used but the readability of yaml is useful.
 
 
 ## Getting Started
@@ -10,7 +10,7 @@ Processto uses [globby](https://github.com/sindresorhus/globby) to process direc
 Install with npm
 
 ```bash
-npm install --save-dev processto
+npm install --save-dev processmd
 ```
 
 
@@ -19,13 +19,13 @@ npm install --save-dev processto
 You can then use the cli
 
 ```bash
-processto "content/**/*.{yml,md}" --outputDir output
+processmd "content/**/*.{yml,md}" --outputDir output
 ```
 
 And watch files to automatically recompile them.
 
 ```bash
-processto "content/**/*.{yml,md}" --outputDir output --watch
+processmd "content/**/*.{yml,md}" --outputDir output --watch
 ```
 
 With an input markdown file such as this:
@@ -36,7 +36,7 @@ draft: true
 num: 1
 ---
 
-# processto
+# processmd
 
 Process a directory of markdown *and* yaml files to JSON files
 ```
@@ -47,9 +47,9 @@ This would be the resulting JSON:
   "test":"frontmatter",
   "draft":true,
   "num":1,
-  "bodyContent":"# processto\r\n\r\nProcess a directory of markdown *and* yaml files to JSON files",
-  "bodyHtml":"<h1 id=\"processto\">processto</h1>\n<p>Process a directory of markdown <em>and</em> yaml files to JSON files</p>\n",
-  "title":"processto",
+  "bodyContent":"# processmd\r\n\r\nProcess a directory of markdown *and* yaml files to JSON files",
+  "bodyHtml":"<h1 id=\"processmd\">processmd</h1>\n<p>Process a directory of markdown <em>and</em> yaml files to JSON files</p>\n",
+  "title":"processmd",
   "dir":"test/data/output",
   "base":"frontmatter.json",
   "ext":".json",
@@ -82,10 +82,10 @@ It would produce this directory output:
 
 ## Advanced Usage
 
-Processto will also output some summary data as a json object to stdout when used with the `--stdout` option. Then you can direct that to a file.
+processmd will also output some summary data as a json object to stdout when used with the `--stdout` option. Then you can direct that to a file.
 
 ```bash
-processto \"content/**/*.{yml,md}\" --stdout --outputDir output > summary.json
+processmd \"content/**/*.{yml,md}\" --stdout --outputDir output > summary.json
 ```
 
 summary.json will contain:

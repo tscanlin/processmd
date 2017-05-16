@@ -1,12 +1,12 @@
 const spawn = require('child_process').spawn
-const processtoLib = require('./index')
-const processto = processtoLib.default
+const processmdLib = require('./index')
+const processmd = processmdLib.default
 
-const readFileContent = processtoLib._readFileContent
+const readFileContent = processmdLib._readFileContent
 const outputJson = require('./test/data/output.json')
 const backJson = require('./test/data/back.json')
 
-describe('processto', () => {
+describe('processmd', () => {
   it('should process a directory to JSON properly', done => {
     const cli = spawn('node', [
       './cli.js',
@@ -73,7 +73,7 @@ describe('processto', () => {
 
   it('#isMarkdown should properly determine markdown files', () => {
     expect(
-      processtoLib._isMarkdown({
+      processmdLib._isMarkdown({
         bodyContent: 'Hi!',
         bodyHtml: '<p>Hi!</p>',
       })
@@ -82,7 +82,7 @@ describe('processto', () => {
 
   it('#isMarkdown should properly determine when files are NOT markdown files', () => {
     expect(
-      processtoLib._isMarkdown({
+      processmdLib._isMarkdown({
         title: 'Foo',
         someProp1: true,
       })
@@ -91,7 +91,7 @@ describe('processto', () => {
 
   it('#findCommonDir should find the lowest common parent from an array of files', () => {
     expect(
-      processtoLib._findCommonDir([
+      processmdLib._findCommonDir([
         'test/data/output/frontmatter.json',
         'test/data/output/L1/L2/test2.json',
         'test/data/output/L1/test.json',

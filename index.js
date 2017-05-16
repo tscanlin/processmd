@@ -20,7 +20,7 @@ const SOURCE_MODE = 'source'
 
 
 // Main function
-function processto(options, callback) {
+function processmd(options, callback) {
   options = Object.assign({}, defaultOptions, options)
 
   // Init marked.
@@ -298,7 +298,7 @@ function debounce(func, wait, immediate) {
 }
 
 module.exports = {
-  default: processto,
+  default: processmd,
   _readFileContent: readFileContent, // for testing.
   _writeFileContent: writeFileContent, // for testing.
   _isMarkdown: isMarkdown, // for testing.
