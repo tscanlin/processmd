@@ -18,7 +18,6 @@ const FRONTMATTER_SEPERATOR = '---' + NEWLINE
 
 const SOURCE_MODE = 'source'
 
-
 // Main function
 function processmd(options, callback) {
   options = Object.assign({}, defaultOptions, options)
@@ -28,12 +27,12 @@ function processmd(options, callback) {
   if (options.highlightCode) {
     try {
       markedOptions = {
-        highlight: function (code) {
+        highlight: function(code) {
           return require('highlight.js').highlightAuto(code).value
-        }
+        },
       }
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
   }
   marked.setOptions(markedOptions)
@@ -51,17 +50,21 @@ function processmd(options, callback) {
       options._commonDir = commonDir
 
       if (options.watch) {
-        const d = debounce(function() {
-          processOutput()
-        }, 200, true)
+        const d = debounce(
+          function() {
+            processOutput()
+          },
+          200,
+          true
+        )
 
         // fs.watch isn't supported on linux.
         try {
-          fs.watch(commonDir, function (event, filename) {
+          fs.watch(commonDir, function(event, filename) {
             d()
           })
         } catch (e) {
-          console.log(e);
+          console.log(e)
         }
       }
 
@@ -283,18 +286,18 @@ function findCommonDir(files) {
 
 // Debounce from: https://davidwalsh.name/function-debounce
 function debounce(func, wait, immediate) {
-	var timeout;
-	return function() {
-		var context = this, args = arguments;
-		var later = function() {
-			timeout = null;
-			if (!immediate) func.apply(context, args);
-		};
-		var callNow = immediate && !timeout;
-		clearTimeout(timeout);
-		timeout = setTimeout(later, wait);
-		if (callNow) func.apply(context, args);
-	};
+  var timeout
+  return function() {
+    var context = this, args = arguments
+    var later = function() {
+      timeout = null
+      if (!immediate) func.apply(context, args)
+    }
+    var callNow = immediate && !timeout
+    clearTimeout(timeout)
+    timeout = setTimeout(later, wait)
+    if (callNow) func.apply(context, args)
+  }
 }
 
 module.exports = {
