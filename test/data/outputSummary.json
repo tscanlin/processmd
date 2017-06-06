@@ -1,0 +1,82 @@
+{
+  "fileMap": {
+    "test/data/output/frontmatter2.json": {
+      "test": "frontmatter",
+      "draft": true,
+      "num": 1,
+      "title": "Some text that might be a title",
+      "dir": "test/data/output",
+      "base": "frontmatter2.json",
+      "ext": ".json",
+      "sourceBase": "frontmatter2.md",
+      "sourceExt": ".md"
+    },
+    "test/data/output/L1/L2/test2.json": {
+      "name": "yaml2",
+      "deep": true,
+      "count": 10000,
+      "dir": "test/data/output/L1/L2",
+      "base": "test2.json",
+      "ext": ".json",
+      "sourceBase": "test2.yml",
+      "sourceExt": ".yml"
+    },
+    "test/data/output/frontmatter-code.json": {
+      "test": "frontmatter",
+      "draft": true,
+      "num": 1,
+      "title": "Some text that might be a title",
+      "dir": "test/data/output",
+      "base": "frontmatter-code.json",
+      "ext": ".json",
+      "sourceBase": "frontmatter-code.md",
+      "sourceExt": ".md"
+    },
+    "test/data/output/frontmatter.json": {
+      "test": "frontmatter",
+      "draft": true,
+      "num": 1,
+      "title": "processmd",
+      "dir": "test/data/output",
+      "base": "frontmatter.json",
+      "ext": ".json",
+      "sourceBase": "frontmatter.md",
+      "sourceExt": ".md"
+    },
+    "test/data/output/README.json": {
+      "title": "processmd",
+      "dir": "test/data/output",
+      "base": "README.json",
+      "ext": ".json",
+      "sourceBase": "README.md",
+      "sourceExt": ".md"
+    },
+    "test/data/output/L1/test.json": {
+      "type": "yaml",
+      "draft": false,
+      "num": 10,
+      "object": {
+        "prop1": true,
+        "foo": "bar"
+      },
+      "list": [
+        "hi",
+        "bye",
+        1
+      ],
+      "dir": "test/data/output/L1",
+      "base": "test.json",
+      "ext": ".json",
+      "sourceBase": "test.yml",
+      "sourceExt": ".yml"
+    }
+  },
+  "sourceFileArray": [
+    "test/data/input/frontmatter-code.md",
+    "test/data/input/frontmatter.md",
+    "test/data/input/frontmatter2.md",
+    "test/data/input/L1/L2/test2.yml",
+    "test/data/input/L1/test.yml",
+    "test/data/input/README.md"
+  ]
+}

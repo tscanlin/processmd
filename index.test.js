@@ -4,6 +4,7 @@ const processmd = processmdLib.default
 
 const readFileContent = processmdLib._readFileContent
 const outputJson = require('./test/data/output.json')
+const outputSummaryJson = require('./test/data/outputSummary.json')
 const backJson = require('./test/data/back.json')
 
 describe('processmd', () => {
@@ -32,6 +33,44 @@ describe('processmd', () => {
           } else {
             expect(parsedData.fileMap[key][prop]).toEqual(
               outputJson.fileMap[key][prop]
+            )
+          }
+        })
+      })
+    })
+
+    cli.on('close', code => {
+      expect(code).toEqual(0)
+      done()
+    })
+  })
+
+  it('should process a directory to JSON properly with a summary file', done => {
+    const cli = spawn('node', [
+      './cli.js',
+      'test/data/input/**/*.{yml,md}',
+      '--stdout',
+      '--outputDir',
+      'test/data/output',
+      '--removeBodyProps',
+    ])
+
+    cli.stdout.on('data', data => {
+      const parsedData = JSON.parse(data.toString())
+      expect(parsedData.sourceFileArray).toEqual(outputSummaryJson.sourceFileArray)
+      Object.keys(parsedData.fileMap).forEach(key => {
+        Object.keys(parsedData.fileMap[key]).forEach(prop => {
+          if (
+            typeof parsedData.fileMap[key][prop] === 'string' &&
+            (prop === 'bodyHtml' || prop === 'bodyContent')
+          ) {
+            // Fix for windows breaking tests with different newline character.
+            expect(
+              parsedData.fileMap[key][prop].split('\r\n').join('\n')
+            ).toEqual(outputSummaryJson.fileMap[key][prop].split('\r\n').join('\n'))
+          } else {
+            expect(parsedData.fileMap[key][prop]).toEqual(
+              outputSummaryJson.fileMap[key][prop]
             )
           }
         })

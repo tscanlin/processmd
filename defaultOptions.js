@@ -1,6 +1,8 @@
 module.exports = {
   // The directory output will be processed to.
   outputDir: './dist',
+  // Output location for the summary file (relative path to json file that has content from all files).
+  summaryOutput: null,
   // Watch mode, recompile on file changes.
   watch: false,
   // Prefix for output filenames, default is no prefix, just the original filename.
@@ -9,6 +11,8 @@ module.exports = {
   highlightCode: true,
   // For markdown files, how many characters should be included in an add `preview` property. 0 for no preview.
   preview: 0,
+  // Remove body props from summary file.
+  removeBodyProps: false,
   // Include the markdown document title as `title` on the resulting json objects.
   includeTitle: true,
   // Include the directory as `dir` on the resulting json objects.

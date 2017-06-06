@@ -83,14 +83,27 @@ function processmd(options, callback) {
         result.forEach(function(file, i) {
           processingFunc(file, options, function(newFile, content) {
             finishCount++
+
             // Replace backslashes with forward slashes to keep windows consistent.
             const filename = replaceBackslashes(newFile)
+
+            // Remove body props from summary.
+            if (options.removeBodyProps) {
+              content = removeBodyProps(content)
+            }
+
             summaryObj.fileMap[filename] = options.convertMode === SOURCE_MODE
               ? content
               : JSON.parse(content)
 
             if (finishCount === result.length) {
-              resolve(summaryObj)
+              if (options.summaryOutput) {
+                writeFileContent(options.summaryOutput, JSON.stringify(summaryObj, null, 2), function(e, d) {
+                  resolve(summaryObj)
+                })
+              } else {
+                resolve(summaryObj)
+              }
             }
           })
         })
@@ -282,6 +295,16 @@ function findCommonDir(files) {
     }
     return !p ? c : p.split('').filter((letter, i) => letter === c[i]).join('')
   }, '')
+}
+
+// Remove body props from summary.
+function removeBodyProps(content) {
+  try {
+    const json = JSON.parse(content)
+    delete json.bodyContent
+    delete json.bodyHtml
+    return JSON.stringify(json)
+  } catch(e) { }
 }
 
 // Debounce from: https://davidwalsh.name/function-debounce
