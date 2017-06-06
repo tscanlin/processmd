@@ -170,7 +170,7 @@ function processYamlAndMarkdown(file, options, cb) {
       jsonData.preview = jsonData.preview.substring(0, options.preview) + '…'
     }
     if (options.includeTitle && jsonData.bodyContent) {
-      jsonData.title = jsonData.bodyHtml.match(/>(.*?)<\//)[1]
+      jsonData.title = jsonData.title || jsonData.bodyHtml.match(/>(.*?)<\//)[1]
     }
     if (options.includeDir) {
       jsonData.dir = replaceBackslashes(path.dirname(newPath))
