@@ -165,9 +165,9 @@ function processYamlAndMarkdown(file, options, cb) {
 
     if (options.preview > 0 && jsonData.bodyContent) {
       // TODO: These regular expressions could probably be better.
-      jsonData.preview = jsonData.bodyHtml.match(/<p>(.*?)<\/p>/)[1]
-      jsonData.preview = jsonData.preview.split(/<[^>]*>/).join('')
-      jsonData.preview = jsonData.preview.substring(0, options.preview) + '…'
+      // jsonData.preview = jsonData.bodyHtml.match(/<p>(.*?)<\/p>/)[1]
+      // jsonData.preview = jsonData.preview.split(/<[^>]*>/).join('')
+      jsonData.preview = jsonData.bodyContent.substring(0, options.preview) + '…'
     }
     if (options.includeTitle && jsonData.bodyContent) {
       jsonData.title = jsonData.title || jsonData.bodyHtml.match(/>(.*?)<\//)[1]
