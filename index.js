@@ -6,6 +6,7 @@ const globby = require('globby')
 const marked = require('marked')
 const yaml = require('js-yaml')
 const mkdirp = require('mkdirp')
+const removeMd = require('remove-markdown')
 const defaultOptions = require('./defaultOptions')
 
 const EXTENSIONS = {
@@ -167,7 +168,10 @@ function processYamlAndMarkdown(file, options, cb) {
       // TODO: These regular expressions could probably be better.
       // jsonData.preview = jsonData.bodyHtml.match(/<p>(.*?)<\/p>/)[1]
       // jsonData.preview = jsonData.preview.split(/<[^>]*>/).join('')
-      jsonData.preview = jsonData.bodyContent.substring(0, options.preview) + '…'
+      const preview = removeMd(jsonData.bodyContent)
+      const previewArr = preview.substring(0, options.preview).split(' ')
+      previewArr.pop()
+      jsonData.preview = previewArr.join(' ')
     }
     if (options.includeTitle && jsonData.bodyContent) {
       jsonData.title = jsonData.title || jsonData.bodyHtml.match(/>(.*?)<\//)[1]

@@ -8,6 +8,7 @@
       "dir": "test/data/output",
       "base": "frontmatter2.json",
       "ext": ".json",
+      "preview": "Some text that might be a",
       "sourceBase": "frontmatter2.md",
       "sourceExt": ".md"
     },
@@ -18,6 +19,7 @@
       "dir": "test/data/output/L1/L2",
       "base": "test2.json",
       "ext": ".json",
+      "preview": "Some text that might be a",
       "sourceBase": "test2.yml",
       "sourceExt": ".yml"
     },
@@ -29,6 +31,7 @@
       "dir": "test/data/output",
       "base": "frontmatter-code.json",
       "ext": ".json",
+      "preview": "Some text that might be a",
       "sourceBase": "frontmatter-code.md",
       "sourceExt": ".md"
     },
@@ -40,6 +43,7 @@
       "dir": "test/data/output",
       "base": "frontmatter.json",
       "ext": ".json",
+      "preview": "processmd\n\nProcess a directory of",
       "sourceBase": "frontmatter.md",
       "sourceExt": ".md"
     },
@@ -48,6 +52,7 @@
       "dir": "test/data/output",
       "base": "README.json",
       "ext": ".json",
+      "preview": "processmd\n\nProcess a directory of",
       "sourceBase": "README.md",
       "sourceExt": ".md"
     },
@@ -67,6 +72,7 @@
       "dir": "test/data/output/L1",
       "base": "test.json",
       "ext": ".json",
+      "preview": "Some text that might be a",
       "sourceBase": "test.yml",
       "sourceExt": ".yml"
     }

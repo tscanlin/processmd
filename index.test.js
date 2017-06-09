@@ -52,6 +52,8 @@ describe('processmd', () => {
       '--stdout',
       '--outputDir',
       'test/data/output',
+      '--preview',
+      '40',
       '--removeBodyProps',
     ])
 
