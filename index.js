@@ -24,16 +24,19 @@ function processmd(options, callback) {
   options = Object.assign({}, defaultOptions, options)
 
   // Init marked.
-  let markedOptions = {}
+  let markedOptions = {
+    langPrefix: 'hljs lang-'
+  }
   if (options.highlightCode) {
     try {
-      markedOptions = {
-        highlight: function (code) {
-          return require('highlight.js').highlightAuto(code).value
-        }
-      }
+      markedOptions = Object.assign(markedOptions, {
+        highlight: function(code) {
+          const highlight = require('highlight.js')
+          return highlight.highlightAuto(code).value
+        },
+      })
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
   }
   marked.setOptions(markedOptions)
