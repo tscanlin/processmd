@@ -15,7 +15,7 @@ const EXTENSIONS = {
   YML: '.yml',
 }
 const NEWLINE = '\n'
-const FRONTMATTER_SEPERATOR = '---' + NEWLINE
+const FRONTMATTER_SEPERATOR = '---'
 
 const SOURCE_MODE = 'source'
 
@@ -218,10 +218,9 @@ function processJson(file, options, cb) {
       newContent += fileData.bodyContent + NEWLINE
       if (Object.keys(cleanProps).length > 0) {
         newContent =
-          FRONTMATTER_SEPERATOR +
+          FRONTMATTER_SEPERATOR + NEWLINE +
           cleanYaml +
-          FRONTMATTER_SEPERATOR +
-          NEWLINE +
+          FRONTMATTER_SEPERATOR + NEWLINE + NEWLINE +
           newContent
       }
       extension = '.md'
