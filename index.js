@@ -14,7 +14,7 @@ const EXTENSIONS = {
   MD: '.md',
   YML: '.yml',
 }
-const NEWLINE = process.platform === 'win32' ? '\r\n' : '\n'
+const NEWLINE = '\n'
 const FRONTMATTER_SEPERATOR = '---' + NEWLINE
 
 const SOURCE_MODE = 'source'
