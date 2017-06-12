@@ -115,6 +115,8 @@ module.exports = {
   summaryOutput: null,
   // Watch mode, recompile on file changes.
   watch: false,
+  // Debounce timeout for watching files.
+  watchDebounce: 1000,
   // Prefix for output filenames, default is no prefix, just the original filename.
   filenamePrefix: '',
   // For markdown files, highlight code block.

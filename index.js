@@ -58,7 +58,7 @@ function processmd(options, callback) {
           function() {
             processOutput()
           },
-          200,
+          options.watchDebounce,
           true
         )
 
