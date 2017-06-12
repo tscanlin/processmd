@@ -64,7 +64,7 @@ function processmd(options, callback) {
 
         // fs.watch isn't supported on linux.
         try {
-          fs.watch(commonDir, function(event, filename) {
+          fs.watch(commonDir, { recursive: true }, function(event, filename) {
             d()
           })
         } catch (e) {
