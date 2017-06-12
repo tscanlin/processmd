@@ -53,8 +53,7 @@ describe('processmd', () => {
       '--outputDir',
       'test/data/output',
       '--preview',
-      '40',
-      '--removeBodyProps',
+      '40'
     ])
 
     cli.stdout.on('data', data => {

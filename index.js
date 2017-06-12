@@ -92,7 +92,7 @@ function processmd(options, callback) {
             const filename = replaceBackslashes(newFile)
 
             // Remove body props from summary.
-            if (options.removeBodyProps) {
+            if (!options.includeBodyProps) {
               content = removeBodyProps(content)
             }
 

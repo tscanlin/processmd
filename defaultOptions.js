@@ -11,8 +11,8 @@ module.exports = {
   highlightCode: true,
   // For markdown files, how many characters should be included in an add `preview` property. 0 for no preview.
   preview: 0,
-  // Remove body props from summary file.
-  removeBodyProps: false,
+  // Include body props from summary file.
+  includeBodyProps: false,
   // Include the markdown document title as `title` on the resulting json objects.
   includeTitle: true,
   // Include the directory as `dir` on the resulting json objects.
