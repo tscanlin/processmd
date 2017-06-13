@@ -4,6 +4,15 @@
 
 processmd uses [globby](https://github.com/sindresorhus/globby) to process directories of markdown and yaml files to a mirrored tree of JSON files. Additionally, with the `convertMode: "source"` option you can convert back from json to the input markdown and yaml files. This is mostly useful for blogs or static content for websites or other places where json is used but the readability of yaml is useful.
 
+Comparison to similar tools:
+
+|  Package | Processes folder to single file  | Processes folder to multiple files | cli API  | Uses gulp | includes metadata about file |  Markdown preview |
+|---|---|---|---|---|---|---|
+| [markdown-to-json](https://www.npmjs.com/package/markdown-to-json) or [markdown-to-json-with-content](https://www.npmjs.com/package/markdown-to-json-with-content)  |  ✓  |  ×  |  ✓  | ×  | ×   |  ✓ |
+|  [gulp-markdown-to-json](https://github.com/sparkartgroup/gulp-markdown-to-json) | ✓  |  ✓ | ×  |  ✓ |  ✓ | ×  |
+| [markdown-json](https://www.npmjs.com/package/markdown-json)  | ✓  | ×  | ✓  | ×  |  × | ✓  |
+
+If you know a tool that you think should be on this list please open a PR.
 
 ## Getting Started
 

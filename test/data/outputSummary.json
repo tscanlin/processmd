@@ -8,7 +8,7 @@
       "dir": "test/data/output",
       "base": "frontmatter2.json",
       "ext": ".json",
-      "preview": "Some text that might be a",
+      "preview": "Some text that might be a title\n\nProcess",
       "sourceBase": "frontmatter2.md",
       "sourceExt": ".md"
     },
@@ -31,7 +31,7 @@
       "dir": "test/data/output",
       "base": "frontmatter-code.json",
       "ext": ".json",
-      "preview": "Some text that might be a",
+      "preview": "Some text that might be a title\n\nProcess",
       "sourceBase": "frontmatter-code.md",
       "sourceExt": ".md"
     },
