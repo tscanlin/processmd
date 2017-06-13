@@ -11,6 +11,7 @@ Comparison to similar tools:
 | [markdown-to-json](https://www.npmjs.com/package/markdown-to-json) or [markdown-to-json-with-content](https://www.npmjs.com/package/markdown-to-json-with-content)  |  ✓  |  ×  |  ✓  | ×  | ×   |  ✓ |
 |  [gulp-markdown-to-json](https://github.com/sparkartgroup/gulp-markdown-to-json) | ✓  |  ✓ | ×  |  ✓ |  ✓ | ×  |
 | [markdown-json](https://www.npmjs.com/package/markdown-json)  | ✓  | ×  | ✓  | ×  |  × | ✓  |
+| [**processmd**](https://github.com/tscanlin/processmd)  | ✓  | ✓  | ✓  | ×  |  ✓ | ✓  |
 
 If you know a tool that you think should be on this list please open a PR.
 
