@@ -176,6 +176,10 @@ function processYamlAndMarkdown(file, options, cb) {
         if (preview[i] === ' ') {
           splitPoint = i
         }
+        if (preview[i] === undefined) {
+          splitPoint = i
+          break
+        }
       }
       jsonData.preview = preview.substring(0, splitPoint).trim()
     }
