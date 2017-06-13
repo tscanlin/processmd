@@ -13,7 +13,7 @@ Comparison to similar tools:
 | [markdown-json](https://www.npmjs.com/package/markdown-json)  | ✓  | ×  | ✓  | ×  |  × | ✓  |
 | [**processmd**](https://github.com/tscanlin/processmd)  | ✓  | ✓  | ✓  | ×  |  ✓ | ✓  |
 
-If you know a tool that you think should be on this list please open a PR.
+I'll note that processmd can also convert back from json to yaml and it has a suite of tests. If you know a tool that you think should be on this list please open a PR.
 
 ## Getting Started
 
