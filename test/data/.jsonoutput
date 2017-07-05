@@ -1,0 +1,10 @@
+{
+  "title": "First post",
+  "bodyContent": "An h1 header\n============\n\nParagraphs are separated by a blank line.\n\n2nd paragraph. *Italic*, **bold**, and `monospace`. Itemized lists\nlook like:\n\n  * this one\n  * that one\n  * the other one\n\nNote that",
+  "bodyHtml": "<h1 id=\"an-h1-header\">An h1 header</h1>\n<p>Paragraphs are separated by a blank line.</p>\n<p>2nd paragraph. <em>Italic</em>, <strong>bold</strong>, and <code>monospace</code>. Itemized lists\nlook like:</p>\n<ul>\n<li>this one</li>\n<li>that one</li>\n<li>the other one</li>\n</ul>\n<p>Note that</p>\n",
+  "dir": "test/data",
+  "base": ".jsonoutput",
+  "ext": ".json",
+  "sourceBase": "output",
+  "sourceExt": ""
+}
