@@ -135,20 +135,12 @@ function processYamlAndMarkdown(file, options, cb) {
     let frontmatter = {}
     let jsonData = {}
 
-    // $---(*)---/n
-
-    //console.log(newShit);
-
     // Markdown.
     if (hasFrontmatter) {
-      let splitContent = fileContent.split(FRONTMATTER_SEPERATOR);
-      var newShit = fileContent.split(/^---([\w\s:])*---/);
+      let splitContent = fileContent.match(/^-{3}[\s\S]+?-{3}/);
       // Remove first string in split content which is empty.
-      if (splitContent[0] === '') {
-        splitContent.shift()
-      }
-      frontmatter = yaml.safeLoad(splitContent[0])
-      content = newShit[2].trim()
+      frontmatter = yaml.safeLoad(splitContent[0].substring(3, splitContent[0].length - 3))
+      content = fileContent.substring(splitContent[0].length);
     }
 
     if (isYaml) {
@@ -159,7 +151,6 @@ function processYamlAndMarkdown(file, options, cb) {
         bodyHtml: options.markdownRenderer(content),
       })
     }
-
     // Rename to the new file.
     const baseFilename = file.replace(options._commonDir, '')
     const parsedPath = path.parse(path.join(options.outputDir, baseFilename))
@@ -171,7 +162,6 @@ function processYamlAndMarkdown(file, options, cb) {
       parsedPath.base.replace(sourceExt, EXTENSIONS.JSON),
     })
     const newPath = path.format(newPathObj)
-
     if (options.preview > 0 && jsonData.bodyContent) {
       const preview = removeMd(jsonData.bodyContent).split('\r').join('') // fix Windows eol.
       let splitPoint = 0
@@ -251,7 +241,6 @@ function processJson(file, options, cb) {
       parsedPath.base.replace(sourceExt, extension),
     })
     const newPath = path.format(newPathObj)
-
     writeFileContent(newPath, newContent, function (e, d) {
       cb(newPath, newContent)
     })
