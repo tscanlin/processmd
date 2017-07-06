@@ -30,7 +30,7 @@ function processmd(options, callback) {
   if (options.highlightCode) {
     try {
       markedOptions = Object.assign(markedOptions, {
-        highlight: function(code) {
+        highlight: function (code) {
           const highlight = require('highlight.js')
           return highlight.highlightAuto(code).value
         },
@@ -48,14 +48,14 @@ function processmd(options, callback) {
     throw new Error('You must pass file patterns in to be processed.')
   }
 
-  const p = new Promise(function(resolve, reject) {
-    globby(globs).then(function(result) {
+  const p = new Promise(function (resolve, reject) {
+    globby(globs).then(function (result) {
       const commonDir = findCommonDir(result)
       options._commonDir = commonDir
 
       if (options.watch) {
         const d = debounce(
-          function() {
+          function () {
             processOutput()
           },
           options.watchDebounce,
@@ -64,7 +64,7 @@ function processmd(options, callback) {
 
         // fs.watch isn't supported on linux.
         try {
-          fs.watch(commonDir, { recursive: true }, function(event, filename) {
+          fs.watch(commonDir, { recursive: true }, function (event, filename) {
             d()
           })
         } catch (e) {
@@ -84,8 +84,8 @@ function processmd(options, callback) {
         summaryObj.fileMap = {}
         summaryObj.sourceFileArray = result
         let finishCount = 0
-        result.forEach(function(file, i) {
-          processingFunc(file, options, function(newFile, content) {
+        result.forEach(function (file, i) {
+          processingFunc(file, options, function (newFile, content) {
             finishCount++
 
             // Replace backslashes with forward slashes to keep windows consistent.
@@ -102,7 +102,7 @@ function processmd(options, callback) {
 
             if (finishCount === result.length) {
               if (options.summaryOutput) {
-                writeFileContent(options.summaryOutput, JSON.stringify(summaryObj, null, 2), function(e, d) {
+                writeFileContent(options.summaryOutput, JSON.stringify(summaryObj, null, 2), function (e, d) {
                   resolve(summaryObj)
                 })
               } else {
@@ -137,13 +137,10 @@ function processYamlAndMarkdown(file, options, cb) {
 
     // Markdown.
     if (hasFrontmatter) {
-      let splitContent = fileContent.split(FRONTMATTER_SEPERATOR)
+      let splitContent = fileContent.match(/^-{3}[\s\S]+?-{3}/);
       // Remove first string in split content which is empty.
-      if (splitContent[0] === '') {
-        splitContent.shift()
-      }
-      frontmatter = yaml.safeLoad(splitContent[0])
-      content = splitContent[1].trim()
+      frontmatter = yaml.safeLoad(splitContent[0].substring(3, splitContent[0].length - 3))
+      content = fileContent.substring(splitContent[0].length);
     }
 
     if (isYaml) {
@@ -154,7 +151,6 @@ function processYamlAndMarkdown(file, options, cb) {
         bodyHtml: options.markdownRenderer(content),
       })
     }
-
     // Rename to the new file.
     const baseFilename = file.replace(options._commonDir, '')
     const parsedPath = path.parse(path.join(options.outputDir, baseFilename))
@@ -163,10 +159,9 @@ function processYamlAndMarkdown(file, options, cb) {
     const newPathObj = Object.assign({}, parsedPath, {
       ext: EXTENSIONS.JSON,
       base: options.filenamePrefix +
-        parsedPath.base.replace(sourceExt, EXTENSIONS.JSON),
+      parsedPath.base.replace(sourceExt, EXTENSIONS.JSON),
     })
     const newPath = path.format(newPathObj)
-
     if (options.preview > 0 && jsonData.bodyContent) {
       const preview = removeMd(jsonData.bodyContent).split('\r').join('') // fix Windows eol.
       let splitPoint = 0
@@ -204,7 +199,7 @@ function processYamlAndMarkdown(file, options, cb) {
 
     // TODO: make this a default callback
     // 2 spaces indent for stringify.
-    writeFileContent(newPath, JSON.stringify(jsonData, null, 2), function(e, d) {
+    writeFileContent(newPath, JSON.stringify(jsonData, null, 2), function (e, d) {
       cb(newPath, JSON.stringify(jsonData))
     })
   })
@@ -243,11 +238,10 @@ function processJson(file, options, cb) {
     const newPathObj = Object.assign({}, parsedPath, {
       ext: extension,
       base: options.filenamePrefix +
-        parsedPath.base.replace(sourceExt, extension),
+      parsedPath.base.replace(sourceExt, extension),
     })
     const newPath = path.format(newPathObj)
-
-    writeFileContent(newPath, newContent, function(e, d) {
+    writeFileContent(newPath, newContent, function (e, d) {
       cb(newPath, newContent)
     })
   })
@@ -282,7 +276,7 @@ function readFileContent(file, cb) {
 
 // Write a file making sure the directory exists first.
 function writeFileContent(file, content, cb) {
-  mkdirp(path.dirname(file), function(err) {
+  mkdirp(path.dirname(file), function (err) {
     fs.writeFile(file, content, (e, data) => {
       cb(e, data)
     })
@@ -301,7 +295,7 @@ function isMarkdown(data) {
 
 // Find the common parent directory given an array of files.
 function findCommonDir(files) {
-  return files.reduce(function(p, c) {
+  return files.reduce(function (p, c) {
     // If it's a file not in any directory then just skip it by assigning the previous value.
     if (c.indexOf('/') === -1) {
       return p
@@ -317,15 +311,15 @@ function removeBodyProps(content) {
     delete json.bodyContent
     delete json.bodyHtml
     return JSON.stringify(json)
-  } catch(e) { }
+  } catch (e) { }
 }
 
 // Debounce from: https://davidwalsh.name/function-debounce
 function debounce(func, wait, immediate) {
   var timeout
-  return function() {
+  return function () {
     var context = this, args = arguments
-    var later = function() {
+    var later = function () {
       timeout = null
       if (!immediate) func.apply(context, args)
     }

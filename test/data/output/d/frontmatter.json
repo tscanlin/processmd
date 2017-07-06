@@ -1,0 +1,13 @@
+{
+  "test": "frontmatter",
+  "draft": true,
+  "num": 1,
+  "bodyContent": "\n\n# processmd\n\nProcess a directory of markdown *and* yaml files to JSON files",
+  "bodyHtml": "<h1 id=\"processmd\">processmd</h1>\n<p>Process a directory of markdown <em>and</em> yaml files to JSON files</p>\n",
+  "title": "processmd",
+  "dir": "test/data/output/d",
+  "base": "frontmatter.json",
+  "ext": ".json",
+  "sourceBase": "frontmatter.md",
+  "sourceExt": ".md"
+}
