@@ -137,19 +137,18 @@ function processYamlAndMarkdown(file, options, cb) {
 
     // $---(*)---/n
 
-    var newShit = fileContent.match(/ˆ\-\-\-(.*)\-\-\-/);
-    console.log(newShit);
-    console.log(fileContent);
+    //console.log(newShit);
 
     // Markdown.
     if (hasFrontmatter) {
-      let splitContent = fileContent.split(FRONTMATTER_SEPERATOR)
+      let splitContent = fileContent.split(FRONTMATTER_SEPERATOR);
+      var newShit = fileContent.split(/^---([\w\s:])*---/);
       // Remove first string in split content which is empty.
       if (splitContent[0] === '') {
         splitContent.shift()
       }
       frontmatter = yaml.safeLoad(splitContent[0])
-      content = splitContent[1].trim()
+      content = newShit[2].trim()
     }
 
     if (isYaml) {

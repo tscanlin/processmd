@@ -1,5 +1,4 @@
 node_modules/
-test/data/output/*
-test/data/back/*
+test/
 *.log
 *.log*
