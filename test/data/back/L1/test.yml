@@ -1,0 +1,10 @@
+type: yaml
+draft: false
+num: 10
+object:
+  prop1: true
+  foo: bar
+list:
+  - hi
+  - bye
+  - 1
