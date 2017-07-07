@@ -137,13 +137,9 @@ function processYamlAndMarkdown(file, options, cb) {
 
     // Markdown.
     if (hasFrontmatter) {
-      let splitContent = fileContent.split(FRONTMATTER_SEPERATOR)
-      // Remove first string in split content which is empty.
-      if (splitContent[0] === '') {
-        splitContent.shift()
-      }
-      frontmatter = yaml.safeLoad(splitContent[0])
-      content = splitContent[1].trim()
+      const splitContent = fileContent.match(/^-{3}[\s\S]+?-{3}/)
+      frontmatter = yaml.safeLoad(splitContent[0].substring(3, splitContent[0].length - 3))
+      content = fileContent.substring(splitContent[0].length).trim()
     }
 
     if (isYaml) {
