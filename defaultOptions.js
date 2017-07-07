@@ -32,5 +32,5 @@ module.exports = {
   // Whether to output to stdout or not.
   stdout: false,
   // Custom markdown renderer function, null to use the default: `marked`.
-  markdownRenderer: null,
+  markdownRenderer: null
 }
