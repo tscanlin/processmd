@@ -1,17 +1,5 @@
 {
   "fileMap": {
-    "test/data/output/frontmatter2.json": {
-      "test": "frontmatter",
-      "draft": true,
-      "num": 1,
-      "title": "Some text that might be a title",
-      "dir": "test/data/output",
-      "base": "frontmatter2.json",
-      "ext": ".json",
-      "preview": "Some text that might be a title\n\nProcess",
-      "sourceBase": "frontmatter2.md",
-      "sourceExt": ".md"
-    },
     "test/data/output/L1/L2/test2.json": {
       "name": "yaml2",
       "deep": true,
@@ -19,41 +7,19 @@
       "dir": "test/data/output/L1/L2",
       "base": "test2.json",
       "ext": ".json",
-      "preview": "Some text that might be a",
       "sourceBase": "test2.yml",
       "sourceExt": ".yml"
-    },
-    "test/data/output/frontmatter-code.json": {
-      "test": "frontmatter",
-      "draft": true,
-      "num": 1,
-      "title": "Some text that might be a title",
-      "dir": "test/data/output",
-      "base": "frontmatter-code.json",
-      "ext": ".json",
-      "preview": "Some text that might be a title\n\nProcess",
-      "sourceBase": "frontmatter-code.md",
-      "sourceExt": ".md"
     },
     "test/data/output/frontmatter.json": {
       "test": "frontmatter",
       "draft": true,
       "num": 1,
+      "preview": "processmd\n\nProcess a directory of",
       "title": "processmd",
       "dir": "test/data/output",
       "base": "frontmatter.json",
       "ext": ".json",
-      "preview": "processmd\n\nProcess a directory of",
       "sourceBase": "frontmatter.md",
-      "sourceExt": ".md"
-    },
-    "test/data/output/README.json": {
-      "title": "processmd",
-      "dir": "test/data/output",
-      "base": "README.json",
-      "ext": ".json",
-      "preview": "processmd\n\nProcess a directory of",
-      "sourceBase": "README.md",
       "sourceExt": ".md"
     },
     "test/data/output/L1/test.json": {
@@ -72,12 +38,54 @@
       "dir": "test/data/output/L1",
       "base": "test.json",
       "ext": ".json",
-      "preview": "Some text that might be a",
       "sourceBase": "test.yml",
       "sourceExt": ".yml"
+    },
+    "test/data/output/frontmatter-code.json": {
+      "test": "frontmatter",
+      "draft": true,
+      "num": 1,
+      "preview": "Some text that might be a title\n\nProcess",
+      "title": "Some text that might be a title",
+      "dir": "test/data/output",
+      "base": "frontmatter-code.json",
+      "ext": ".json",
+      "sourceBase": "frontmatter-code.md",
+      "sourceExt": ".md"
+    },
+    "test/data/output/README.json": {
+      "preview": "processmd\n\nProcess a directory of",
+      "title": "processmd",
+      "dir": "test/data/output",
+      "base": "README.json",
+      "ext": ".json",
+      "sourceBase": "README.md",
+      "sourceExt": ".md"
+    },
+    "test/data/output/frontmatter2.json": {
+      "test": "frontmatter",
+      "draft": true,
+      "num": 1,
+      "preview": "Some text that might be a title\n\nProcess",
+      "title": "Some text that might be a title",
+      "dir": "test/data/output",
+      "base": "frontmatter2.json",
+      "ext": ".json",
+      "sourceBase": "frontmatter2.md",
+      "sourceExt": ".md"
+    },
+    "test/data/output/big-markdown.json": {
+      "preview": "An h1 header\n\nParagraphs are separated",
+      "title": "An h1 header",
+      "dir": "test/data/output",
+      "base": "big-markdown.json",
+      "ext": ".json",
+      "sourceBase": "big-markdown.md",
+      "sourceExt": ".md"
     }
   },
   "sourceFileArray": [
+    "test/data/input/big-markdown.md",
     "test/data/input/frontmatter-code.md",
     "test/data/input/frontmatter.md",
     "test/data/input/frontmatter2.md",

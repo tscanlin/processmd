@@ -156,4 +156,8 @@ module.exports = {
 }
 ```
 
+## Development
+
+To update tests, add new test files to `test/data/input`, and run `npm run start && npm run back`
+
 Enjoy!
