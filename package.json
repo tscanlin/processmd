@@ -16,7 +16,9 @@
     "build": "npm run fix-line-endings",
     "fix-line-endings": "mv cli.js cli.old.js && cat cli.old.js | tr -d '\r' > cli.js",
     "fix-eol": "tr -d '\\015' <test/data/input/frontmatter-code.md >test/data/input/frontmatter-code2.md",
+    "lint": "standard",
     "test": "jasmine",
+    "preversion": "npm run lint && npm run test",
     "v-patch": "npm version patch && git push --tags && npm publish && git push",
     "v-minor": "npm version minor && git push --tags && npm publish && git push",
     "v-major": "npm version major && git push --tags && npm publish && git push"
@@ -40,6 +42,14 @@
   },
   "devDependencies": {
     "jasmine": "^2.6.0",
-    "prettier": "^1.2.2"
+    "prettier": "^1.2.2",
+    "standard": "^10.0.2"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "expect",
+      "it"
+    ]
   }
 }

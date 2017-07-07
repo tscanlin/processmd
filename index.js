@@ -12,7 +12,7 @@ const defaultOptions = require('./defaultOptions')
 const EXTENSIONS = {
   JSON: '.json',
   MD: '.md',
-  YML: '.yml',
+  YML: '.yml'
 }
 const NEWLINE = '\n'
 const FRONTMATTER_SEPERATOR = '---'
@@ -20,7 +20,7 @@ const FRONTMATTER_SEPERATOR = '---'
 const SOURCE_MODE = 'source'
 
 // Main function
-function processmd(options, callback) {
+function processmd (options, callback) {
   options = Object.assign({}, defaultOptions, options)
 
   // Init marked.
@@ -30,10 +30,10 @@ function processmd(options, callback) {
   if (options.highlightCode) {
     try {
       markedOptions = Object.assign(markedOptions, {
-        highlight: function(code) {
+        highlight: function (code) {
           const highlight = require('highlight.js')
           return highlight.highlightAuto(code).value
-        },
+        }
       })
     } catch (e) {
       console.log(e)
@@ -48,14 +48,14 @@ function processmd(options, callback) {
     throw new Error('You must pass file patterns in to be processed.')
   }
 
-  const p = new Promise(function(resolve, reject) {
-    globby(globs).then(function(result) {
+  const p = new Promise(function (resolve, reject) {
+    globby(globs).then(function (result) {
       const commonDir = findCommonDir(result)
       options._commonDir = commonDir
 
       if (options.watch) {
         const d = debounce(
-          function() {
+          function () {
             processOutput()
           },
           options.watchDebounce,
@@ -64,7 +64,7 @@ function processmd(options, callback) {
 
         // fs.watch isn't supported on linux.
         try {
-          fs.watch(commonDir, { recursive: true }, function(event, filename) {
+          fs.watch(commonDir, { recursive: true }, function (event, filename) {
             d()
           })
         } catch (e) {
@@ -79,13 +79,13 @@ function processmd(options, callback) {
         processingFunc = processJson
       }
 
-      function processOutput() {
+      function processOutput () {
         const summaryObj = {}
         summaryObj.fileMap = {}
         summaryObj.sourceFileArray = result
         let finishCount = 0
-        result.forEach(function(file, i) {
-          processingFunc(file, options, function(newFile, content) {
+        result.forEach(function (file, i) {
+          processingFunc(file, options, function (newFile, content) {
             finishCount++
 
             // Replace backslashes with forward slashes to keep windows consistent.
@@ -102,7 +102,7 @@ function processmd(options, callback) {
 
             if (finishCount === result.length) {
               if (options.summaryOutput) {
-                writeFileContent(options.summaryOutput, JSON.stringify(summaryObj, null, 2), function(e, d) {
+                writeFileContent(options.summaryOutput, JSON.stringify(summaryObj, null, 2), function (e, d) {
                   resolve(summaryObj)
                 })
               } else {
@@ -127,8 +127,9 @@ function processmd(options, callback) {
   return p
 }
 
-function processYamlAndMarkdown(file, options, cb) {
+function processYamlAndMarkdown (file, options, cb) {
   readFileContent(file, (err, file, fileContent) => {
+    if (err) throw (err)
     const hasFrontmatter = fileContent.indexOf(FRONTMATTER_SEPERATOR) === 0
     const isYaml = file.endsWith('.yaml') || file.endsWith('.yml')
     let content = fileContent.trim()
@@ -147,7 +148,7 @@ function processYamlAndMarkdown(file, options, cb) {
     } else {
       jsonData = Object.assign({}, frontmatter, {
         bodyContent: content,
-        bodyHtml: options.markdownRenderer(content),
+        bodyHtml: options.markdownRenderer(content)
       })
     }
 
@@ -159,7 +160,7 @@ function processYamlAndMarkdown(file, options, cb) {
     const newPathObj = Object.assign({}, parsedPath, {
       ext: EXTENSIONS.JSON,
       base: options.filenamePrefix +
-        parsedPath.base.replace(sourceExt, EXTENSIONS.JSON),
+        parsedPath.base.replace(sourceExt, EXTENSIONS.JSON)
     })
     const newPath = path.format(newPathObj)
 
@@ -200,14 +201,15 @@ function processYamlAndMarkdown(file, options, cb) {
 
     // TODO: make this a default callback
     // 2 spaces indent for stringify.
-    writeFileContent(newPath, JSON.stringify(jsonData, null, 2), function(e, d) {
+    writeFileContent(newPath, JSON.stringify(jsonData, null, 2), function (e, d) {
       cb(newPath, JSON.stringify(jsonData))
     })
   })
 }
 
-function processJson(file, options, cb) {
+function processJson (file, options, cb) {
   readFileContent(file, (err, file, fileContent) => {
+    if (err) throw (err)
     const fileData = JSON.parse(fileContent)
 
     // Process content.
@@ -239,17 +241,17 @@ function processJson(file, options, cb) {
     const newPathObj = Object.assign({}, parsedPath, {
       ext: extension,
       base: options.filenamePrefix +
-        parsedPath.base.replace(sourceExt, extension),
+        parsedPath.base.replace(sourceExt, extension)
     })
     const newPath = path.format(newPathObj)
 
-    writeFileContent(newPath, newContent, function(e, d) {
+    writeFileContent(newPath, newContent, function (e, d) {
       cb(newPath, newContent)
     })
   })
 }
 
-function cleanFileProps(obj) {
+function cleanFileProps (obj) {
   delete obj.dir
   delete obj.base
   delete obj.ext
@@ -258,7 +260,7 @@ function cleanFileProps(obj) {
   return obj
 }
 
-function cleanMarkdownProps(obj) {
+function cleanMarkdownProps (obj) {
   delete obj.bodyContent
   delete obj.bodyHtml
   delete obj.preview
@@ -267,7 +269,7 @@ function cleanMarkdownProps(obj) {
 }
 
 // Read a file making sure that it is not a directory first.
-function readFileContent(file, cb) {
+function readFileContent (file, cb) {
   if (!file || fs.lstatSync(file).isDirectory()) {
     return null
   }
@@ -277,8 +279,9 @@ function readFileContent(file, cb) {
 }
 
 // Write a file making sure the directory exists first.
-function writeFileContent(file, content, cb) {
-  mkdirp(path.dirname(file), function(err) {
+function writeFileContent (file, content, cb) {
+  mkdirp(path.dirname(file), function (err) {
+    if (err) throw (err)
     fs.writeFile(file, content, (e, data) => {
       cb(e, data)
     })
@@ -286,18 +289,18 @@ function writeFileContent(file, content, cb) {
 }
 
 // Replace backslashes for windows paths.
-function replaceBackslashes(str) {
+function replaceBackslashes (str) {
   return str.split('\\').join('/')
 }
 
 // Determine if its data for a markdown file.
-function isMarkdown(data) {
+function isMarkdown (data) {
   return Boolean(data.bodyContent && data.bodyHtml)
 }
 
 // Find the common parent directory given an array of files.
-function findCommonDir(files) {
-  return files.reduce(function(p, c) {
+function findCommonDir (files) {
+  return files.reduce(function (p, c) {
     // If it's a file not in any directory then just skip it by assigning the previous value.
     if (c.indexOf('/') === -1) {
       return p
@@ -307,21 +310,22 @@ function findCommonDir(files) {
 }
 
 // Remove body props from summary.
-function removeBodyProps(content) {
+function removeBodyProps (content) {
   try {
     const json = JSON.parse(content)
     delete json.bodyContent
     delete json.bodyHtml
     return JSON.stringify(json)
-  } catch(e) { }
+  } catch (e) { }
 }
 
 // Debounce from: https://davidwalsh.name/function-debounce
-function debounce(func, wait, immediate) {
+function debounce (func, wait, immediate) {
   var timeout
-  return function() {
-    var context = this, args = arguments
-    var later = function() {
+  return function () {
+    var context = this
+    var args = arguments
+    var later = function () {
       timeout = null
       if (!immediate) func.apply(context, args)
     }
@@ -337,5 +341,5 @@ module.exports = {
   _readFileContent: readFileContent, // for testing.
   _writeFileContent: writeFileContent, // for testing.
   _isMarkdown: isMarkdown, // for testing.
-  _findCommonDir: findCommonDir, // for testing.
+  _findCommonDir: findCommonDir // for testing.
 }

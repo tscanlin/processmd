@@ -1,8 +1,6 @@
 const spawn = require('child_process').spawn
 const processmdLib = require('./index')
-const processmd = processmdLib.default
 
-const readFileContent = processmdLib._readFileContent
 const outputJson = require('./test/data/output.json')
 const outputSummaryJson = require('./test/data/outputSummary.json')
 const backJson = require('./test/data/back.json')
@@ -14,7 +12,7 @@ describe('processmd', () => {
       'test/data/input/**/*.{yml,md}',
       '--stdout',
       '--outputDir',
-      'test/data/output',
+      'test/data/output'
     ])
 
     cli.stdout.on('data', data => {
@@ -92,7 +90,7 @@ describe('processmd', () => {
       'source',
       '--stdout',
       '--outputDir',
-      'test/data/back',
+      'test/data/back'
     ])
 
     cli.stdout.on('data', data => {
@@ -115,7 +113,7 @@ describe('processmd', () => {
     expect(
       processmdLib._isMarkdown({
         bodyContent: 'Hi!',
-        bodyHtml: '<p>Hi!</p>',
+        bodyHtml: '<p>Hi!</p>'
       })
     ).toBe(true)
   })
@@ -124,7 +122,7 @@ describe('processmd', () => {
     expect(
       processmdLib._isMarkdown({
         title: 'Foo',
-        someProp1: true,
+        someProp1: true
       })
     ).toBe(false)
   })
@@ -135,7 +133,7 @@ describe('processmd', () => {
         'test/data/output/frontmatter.json',
         'test/data/output/L1/L2/test2.json',
         'test/data/output/L1/test.json',
-        'test/data/output/README.json',
+        'test/data/output/README.json'
       ])
     ).toBe('test/data/output/')
   })
