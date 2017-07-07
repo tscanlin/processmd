@@ -10,7 +10,7 @@
     "prettier": "prettier --write --single-quote --trailing-comma --no-semi *.js",
     "start": "npm run build:json",
     "build:json": "node cli.js \"test/data/input/**/*.{yml,md}\" --stdout --includeBodyProps --summaryOutput test/data/output.json --outputDir test/data/output",
-    "build:summary": "node cli.js \"test/data/input/**/*.{yml,md}\" --stdout --summaryOutput test/data/outputSummary.json --outputDir test/data/output",
+    "build:summary": "node cli.js \"test/data/input/**/*.{yml,md}\" --stdout --preview 40 --summaryOutput test/data/outputSummary.json --outputDir test/data/output",
     "build:yaml": "node cli.js \"test/data/output/**/*.json\" --stdout --includeBodyProps --summaryOutput test/data/back.json --convertMode source --outputDir test/data/input",
     "build:all": "npm run build:json && npm run build:summary && npm run build:yaml",
     "build": "npm run fix-line-endings",
