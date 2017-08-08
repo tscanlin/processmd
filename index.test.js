@@ -137,4 +137,13 @@ describe('processmd', () => {
       ])
     ).toBe('test/data/output/')
   })
+
+  it('#findCommonDir should match complete paths only', () => {
+    expect(
+      processmdLib._findCommonDir([
+        'content/pages',
+        'content/posts'
+      ])
+    ).toBe('content/')
+  })
 })
