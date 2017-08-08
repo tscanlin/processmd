@@ -300,7 +300,7 @@ function isMarkdown (data) {
 
 // Find the common parent directory given an array of files.
 function findCommonDir (files) {
-  const path = files.reduce((path, file) => {
+  const path = files.reduce((path, file, fileIndex) => {
     // If it's a file not in any directory then just skip it
     // by assigning the previous value.
     if (!file.includes('/')) {
@@ -308,22 +308,29 @@ function findCommonDir (files) {
     }
 
     // No path set yet
-    if (!path) {
-      return file;
+    if (!path && fileIndex === 0) {
+      return file.substr(0, file.lastIndexOf('/') + 1);
     } else {
-      const sharedIndex = Array.from(path).findIndex((element, index) => {
+      // Get index of last shared character
+      let sharedIndex = Array.from(path).findIndex((element, index) => {
         if (file[index] !== element) {
           return index - 1;
         }
       });
 
+      // Round to nearest full directory
       if (sharedIndex > -1) {
-        const sharedPath = path.substr(0, sharedIndex);
-        return sharedPath.substr(0, sharedPath.lastIndexOf('/') + 1);
+        sharedIndex = path.substr(0, sharedIndex).lastIndexOf('/');
+      }
+
+      // Return shared directory path
+      if (sharedIndex > -1) {
+        return path.substr(0, sharedIndex + 1);
       } else if (file.startsWith(path)) {
         return path;
       }
 
+      // No shared directory path
       return '';
     }
   }, '');

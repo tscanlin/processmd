@@ -145,5 +145,25 @@ describe('processmd', () => {
         'content/posts'
       ])
     ).toBe('content/')
+
+    expect(
+      processmdLib._findCommonDir([
+        'pages/2016/about.md',
+        'posts/drafts/hello_world.md',
+        'posts/drafts/test_post.md'
+      ])
+    ).toBe('')
+
+    expect(
+      processmdLib._findCommonDir([
+        'pages/about.md'
+      ])
+    ).toBe('pages/')
+
+    expect(
+      processmdLib._findCommonDir([
+        'about.md'
+      ])
+    ).toBe('')
   })
 })
