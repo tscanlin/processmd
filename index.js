@@ -320,6 +320,8 @@ function findCommonDir (files) {
       if (sharedIndex > -1) {
         const sharedPath = path.substr(0, sharedIndex);
         return sharedPath.substr(0, sharedPath.lastIndexOf('/') + 1);
+      } else if (file.startsWith(path)) {
+        return path;
       }
 
       return '';
