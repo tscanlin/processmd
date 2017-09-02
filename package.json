@@ -18,6 +18,7 @@
     "fix-eol": "tr -d '\\015' <test/data/input/frontmatter-code.md >test/data/input/frontmatter-code2.md",
     "lint": "standard",
     "test": "jasmine",
+    "pretest": "npm run lint",
     "preversion": "npm run lint && npm run test",
     "v-patch": "npm version patch && git push --tags && npm publish && git push",
     "v-minor": "npm version minor && git push --tags && npm publish && git push",
