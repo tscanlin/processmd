@@ -19,5 +19,5 @@ if (process.argv && process.argv.length > 2) {
     }
   })
 } else {
-  throw new Error('You need to pass arguments to css-razor')
+  throw new Error('You need to pass arguments to processmd')
 }
