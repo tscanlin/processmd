@@ -4,6 +4,7 @@ const fs = require('fs')
 const path = require('path')
 const globby = require('globby')
 const markdownIt = require('markdown-it')()
+const markdownItHighlight = require('markdown-it-highlight').default
 const yaml = require('js-yaml')
 const mkdirp = require('mkdirp')
 const removeMd = require('remove-markdown')
@@ -22,7 +23,7 @@ const SOURCE_MODE = 'source'
 // Main function
 function processmd (options, callback) {
   options = Object.assign({}, defaultOptions, options)
-
+  markdownIt.use(markdownItHighlight)
   options.markdownRenderer = options.markdownRenderer || function mdRender (str) { return markdownIt.render(str) }
 
   const globs = (options.files || []).concat(options._)

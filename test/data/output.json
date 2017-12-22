@@ -1,5 +1,51 @@
 {
   "fileMap": {
+    "test/data/output/frontmatter.json": {
+      "test": "frontmatter",
+      "draft": true,
+      "num": 1,
+      "bodyContent": "# processmd\n\nProcess a directory of markdown *and* yaml files to JSON files",
+      "bodyHtml": "<h1>processmd</h1>\n<p>Process a directory of markdown <em>and</em> yaml files to JSON files</p>\n",
+      "title": "processmd",
+      "dir": "test/data/output",
+      "base": "frontmatter.json",
+      "ext": ".json",
+      "sourceBase": "frontmatter.md",
+      "sourceExt": ".md"
+    },
+    "test/data/output/L1/L2/test2.json": {
+      "name": "yaml2",
+      "deep": true,
+      "count": 10000,
+      "dir": "test/data/output/L1/L2",
+      "base": "test2.json",
+      "ext": ".json",
+      "sourceBase": "test2.yml",
+      "sourceExt": ".yml"
+    },
+    "test/data/output/frontmatter2.json": {
+      "test": "frontmatter",
+      "draft": true,
+      "num": 1,
+      "bodyContent": "Some text that might be a title\n\nProcess [a](#) directory of markdown *and* yaml files to JSON files",
+      "bodyHtml": "<p>Some text that might be a title</p>\n<p>Process <a href=\"#\">a</a> directory of markdown <em>and</em> yaml files to JSON files</p>\n",
+      "title": "Some text that might be a title",
+      "dir": "test/data/output",
+      "base": "frontmatter2.json",
+      "ext": ".json",
+      "sourceBase": "frontmatter2.md",
+      "sourceExt": ".md"
+    },
+    "test/data/output/big-markdown.json": {
+      "bodyContent": "An h1 header\n============\n\nParagraphs are separated by a blank line.\n\n2nd paragraph. *Italic*, **bold**, and `monospace`. Itemized lists\nlook like:\n\n  * this one\n  * that one\n  * the other one\n\nNote that --- not considering the asterisk --- the actual text\ncontent starts at 4-columns in.\n\n> Block quotes are\n> written like so.\n>\n> They can span multiple paragraphs,\n> if you like.\n\nUse 3 dashes for an em-dash. Use 2 dashes for ranges (ex., \"it's all\nin chapters 12--14\"). Three dots ... will be converted to an ellipsis.\nUnicode is supported. ☺\n\n\n\nAn h2 header\n------------\n\nHere's a numbered list:\n\n 1. first item\n 2. second item\n 3. third item\n\nNote again how the actual text starts at 4 columns in (4 characters\nfrom the left side). Here's a code sample:\n\n    # Let me re-iterate ...\n    for i in 1 .. 10 { do-something(i) }\n\nAs you probably guessed, indented 4 spaces. By the way, instead of\nindenting the block, you can use delimited blocks, if you like:\n\n~~~\ndefine foobar() {\n    print \"Welcome to flavor country!\";\n}\n~~~\n\n(which makes copying & pasting easier). You can optionally mark the\ndelimited block for Pandoc to syntax highlight it:\n\n~~~python\nimport time\n# Quick, count to ten!\nfor i in range(10):\n    # (but not *too* quick)\n    time.sleep(0.5)\n    print i\n~~~\n\n\n\n### An h3 header ###\n\nNow a nested list:\n\n 1. First, get these ingredients:\n\n      * carrots\n      * celery\n      * lentils\n\n 2. Boil some water.\n\n 3. Dump everything in the pot and follow\n    this algorithm:\n\n        find wooden spoon\n        uncover pot\n        stir\n        cover pot\n        balance wooden spoon precariously on pot handle\n        wait 10 minutes\n        goto first step (or shut off burner when done)\n\n    Do not bump wooden spoon or it will fall.\n\nNotice again how text always lines up on 4-space indents (including\nthat last line which continues item 3 above).\n\nHere's a link to [a website](http://foo.bar), to a [local\ndoc](local-doc.html), and to a [section heading in the current\ndoc](#an-h2-header). Here's a footnote [^1].\n\n[^1]: Footnote text goes here.\n\nTables can look like this:\n\nsize  material      color\n----  ------------  ------------\n9     leather       brown\n10    hemp canvas   natural\n11    glass         transparent\n\nTable: Shoes, their sizes, and what they're made of\n\n(The above is the caption for the table.) Pandoc also supports\nmulti-line tables:\n\n--------  -----------------------\nkeyword   text\n--------  -----------------------\nred       Sunsets, apples, and\n          other red or reddish\n          things.\n\ngreen     Leaves, grass, frogs\n          and other things it's\n          not easy being.\n--------  -----------------------\n\nA horizontal rule follows.\n\n***\n\nHere's a definition list:\n\napples\n  : Good for making applesauce.\noranges\n  : Citrus!\ntomatoes\n  : There's no \"e\" in tomatoe.\n\nAgain, text is indented 4 spaces. (Put a blank line between each\nterm/definition pair to spread things out more.)\n\nHere's a \"line block\":\n\n| Line one\n|   Line too\n| Line tree\n\nand images can be specified like so:\n\n![example image](example-image.jpg \"An exemplary image\")\n\nInline math equations go in like so: $\\omega = d\\phi / dt$. Display\nmath should get its own line and be put in in double-dollarsigns:\n\n$$I = \\int \\rho R^{2} dV$$\n\nAnd note that you can backslash-escape any punctuation characters\nwhich you wish to be displayed literally, ex.: \\`foo\\`, \\*bar\\*, etc.",
+      "bodyHtml": "<h1>An h1 header</h1>\n<p>Paragraphs are separated by a blank line.</p>\n<p>2nd paragraph. <em>Italic</em>, <strong>bold</strong>, and <code>monospace</code>. Itemized lists\nlook like:</p>\n<ul>\n<li>this one</li>\n<li>that one</li>\n<li>the other one</li>\n</ul>\n<p>Note that --- not considering the asterisk --- the actual text\ncontent starts at 4-columns in.</p>\n<blockquote>\n<p>Block quotes are\nwritten like so.</p>\n<p>They can span multiple paragraphs,\nif you like.</p>\n</blockquote>\n<p>Use 3 dashes for an em-dash. Use 2 dashes for ranges (ex., &quot;it's all\nin chapters 12--14&quot;). Three dots ... will be converted to an ellipsis.\nUnicode is supported. ☺</p>\n<h2>An h2 header</h2>\n<p>Here's a numbered list:</p>\n<ol>\n<li>first item</li>\n<li>second item</li>\n<li>third item</li>\n</ol>\n<p>Note again how the actual text starts at 4 columns in (4 characters\nfrom the left side). Here's a code sample:</p>\n<pre><code># Let me re-iterate ...\nfor i in 1 .. 10 { do-something(i) }\n</code></pre>\n<p>As you probably guessed, indented 4 spaces. By the way, instead of\nindenting the block, you can use delimited blocks, if you like:</p>\n<pre><code>define foobar() {\n    print &quot;Welcome to flavor country!&quot;;\n}\n</code></pre>\n<p>(which makes copying &amp; pasting easier). You can optionally mark the\ndelimited block for Pandoc to syntax highlight it:</p>\n<pre><code class=\"hljs\"><span class=\"hljs-keyword\">import</span> time\n<span class=\"hljs-comment\"># Quick, count to ten!</span>\n<span class=\"hljs-keyword\">for</span> i <span class=\"hljs-keyword\">in</span> range(<span class=\"hljs-number\">10</span>):\n    <span class=\"hljs-comment\"># (but not *too* quick)</span>\n    time.sleep(<span class=\"hljs-number\">0.5</span>)\n    <span class=\"hljs-keyword\">print</span> i</code></pre><h3>An h3 header</h3>\n<p>Now a nested list:</p>\n<ol>\n<li>\n<p>First, get these ingredients:</p>\n<ul>\n<li>carrots</li>\n<li>celery</li>\n<li>lentils</li>\n</ul>\n</li>\n<li>\n<p>Boil some water.</p>\n</li>\n<li>\n<p>Dump everything in the pot and follow\nthis algorithm:</p>\n<pre><code>find wooden spoon\nuncover pot\nstir\ncover pot\nbalance wooden spoon precariously on pot handle\nwait 10 minutes\ngoto first step (or shut off burner when done)\n</code></pre>\n<p>Do not bump wooden spoon or it will fall.</p>\n</li>\n</ol>\n<p>Notice again how text always lines up on 4-space indents (including\nthat last line which continues item 3 above).</p>\n<p>Here's a link to <a href=\"http://foo.bar\">a website</a>, to a <a href=\"local-doc.html\">local\ndoc</a>, and to a <a href=\"#an-h2-header\">section heading in the current\ndoc</a>. Here's a footnote [^1].</p>\n<p>[^1]: Footnote text goes here.</p>\n<p>Tables can look like this:</p>\n<p>size  material      color</p>\n<hr>\n<p>9     leather       brown\n10    hemp canvas   natural\n11    glass         transparent</p>\n<p>Table: Shoes, their sizes, and what they're made of</p>\n<p>(The above is the caption for the table.) Pandoc also supports\nmulti-line tables:</p>\n<hr>\n<p>keyword   text</p>\n<hr>\n<p>red       Sunsets, apples, and\nother red or reddish\nthings.</p>\n<p>green     Leaves, grass, frogs\nand other things it's\nnot easy being.</p>\n<hr>\n<p>A horizontal rule follows.</p>\n<hr>\n<p>Here's a definition list:</p>\n<p>apples\n: Good for making applesauce.\noranges\n: Citrus!\ntomatoes\n: There's no &quot;e&quot; in tomatoe.</p>\n<p>Again, text is indented 4 spaces. (Put a blank line between each\nterm/definition pair to spread things out more.)</p>\n<p>Here's a &quot;line block&quot;:</p>\n<p>| Line one\n|   Line too\n| Line tree</p>\n<p>and images can be specified like so:</p>\n<p><img src=\"example-image.jpg\" alt=\"example image\" title=\"An exemplary image\"></p>\n<p>Inline math equations go in like so: $\\omega = d\\phi / dt$. Display\nmath should get its own line and be put in in double-dollarsigns:</p>\n<p>$$I = \\int \\rho R^{2} dV$$</p>\n<p>And note that you can backslash-escape any punctuation characters\nwhich you wish to be displayed literally, ex.: `foo`, *bar*, etc.</p>\n",
+      "title": "An h1 header",
+      "dir": "test/data/output",
+      "base": "big-markdown.json",
+      "ext": ".json",
+      "sourceBase": "big-markdown.md",
+      "sourceExt": ".md"
+    },
     "test/data/output/L1/test.json": {
       "type": "yaml",
       "draft": false,
@@ -19,63 +65,17 @@
       "sourceBase": "test.yml",
       "sourceExt": ".yml"
     },
-    "test/data/output/L1/L2/test2.json": {
-      "name": "yaml2",
-      "deep": true,
-      "count": 10000,
-      "dir": "test/data/output/L1/L2",
-      "base": "test2.json",
-      "ext": ".json",
-      "sourceBase": "test2.yml",
-      "sourceExt": ".yml"
-    },
-    "test/data/output/frontmatter.json": {
-      "test": "frontmatter",
-      "draft": true,
-      "num": 1,
-      "bodyContent": "# processmd\n\nProcess a directory of markdown *and* yaml files to JSON files",
-      "bodyHtml": "<h1>processmd</h1>\n<p>Process a directory of markdown <em>and</em> yaml files to JSON files</p>\n",
-      "title": "processmd",
-      "dir": "test/data/output",
-      "base": "frontmatter.json",
-      "ext": ".json",
-      "sourceBase": "frontmatter.md",
-      "sourceExt": ".md"
-    },
-    "test/data/output/big-markdown.json": {
-      "bodyContent": "An h1 header\n============\n\nParagraphs are separated by a blank line.\n\n2nd paragraph. *Italic*, **bold**, and `monospace`. Itemized lists\nlook like:\n\n  * this one\n  * that one\n  * the other one\n\nNote that --- not considering the asterisk --- the actual text\ncontent starts at 4-columns in.\n\n> Block quotes are\n> written like so.\n>\n> They can span multiple paragraphs,\n> if you like.\n\nUse 3 dashes for an em-dash. Use 2 dashes for ranges (ex., \"it's all\nin chapters 12--14\"). Three dots ... will be converted to an ellipsis.\nUnicode is supported. ☺\n\n\n\nAn h2 header\n------------\n\nHere's a numbered list:\n\n 1. first item\n 2. second item\n 3. third item\n\nNote again how the actual text starts at 4 columns in (4 characters\nfrom the left side). Here's a code sample:\n\n    # Let me re-iterate ...\n    for i in 1 .. 10 { do-something(i) }\n\nAs you probably guessed, indented 4 spaces. By the way, instead of\nindenting the block, you can use delimited blocks, if you like:\n\n~~~\ndefine foobar() {\n    print \"Welcome to flavor country!\";\n}\n~~~\n\n(which makes copying & pasting easier). You can optionally mark the\ndelimited block for Pandoc to syntax highlight it:\n\n~~~python\nimport time\n# Quick, count to ten!\nfor i in range(10):\n    # (but not *too* quick)\n    time.sleep(0.5)\n    print i\n~~~\n\n\n\n### An h3 header ###\n\nNow a nested list:\n\n 1. First, get these ingredients:\n\n      * carrots\n      * celery\n      * lentils\n\n 2. Boil some water.\n\n 3. Dump everything in the pot and follow\n    this algorithm:\n\n        find wooden spoon\n        uncover pot\n        stir\n        cover pot\n        balance wooden spoon precariously on pot handle\n        wait 10 minutes\n        goto first step (or shut off burner when done)\n\n    Do not bump wooden spoon or it will fall.\n\nNotice again how text always lines up on 4-space indents (including\nthat last line which continues item 3 above).\n\nHere's a link to [a website](http://foo.bar), to a [local\ndoc](local-doc.html), and to a [section heading in the current\ndoc](#an-h2-header). Here's a footnote [^1].\n\n[^1]: Footnote text goes here.\n\nTables can look like this:\n\nsize  material      color\n----  ------------  ------------\n9     leather       brown\n10    hemp canvas   natural\n11    glass         transparent\n\nTable: Shoes, their sizes, and what they're made of\n\n(The above is the caption for the table.) Pandoc also supports\nmulti-line tables:\n\n--------  -----------------------\nkeyword   text\n--------  -----------------------\nred       Sunsets, apples, and\n          other red or reddish\n          things.\n\ngreen     Leaves, grass, frogs\n          and other things it's\n          not easy being.\n--------  -----------------------\n\nA horizontal rule follows.\n\n***\n\nHere's a definition list:\n\napples\n  : Good for making applesauce.\noranges\n  : Citrus!\ntomatoes\n  : There's no \"e\" in tomatoe.\n\nAgain, text is indented 4 spaces. (Put a blank line between each\nterm/definition pair to spread things out more.)\n\nHere's a \"line block\":\n\n| Line one\n|   Line too\n| Line tree\n\nand images can be specified like so:\n\n![example image](example-image.jpg \"An exemplary image\")\n\nInline math equations go in like so: $\\omega = d\\phi / dt$. Display\nmath should get its own line and be put in in double-dollarsigns:\n\n$$I = \\int \\rho R^{2} dV$$\n\nAnd note that you can backslash-escape any punctuation characters\nwhich you wish to be displayed literally, ex.: \\`foo\\`, \\*bar\\*, etc.",
-      "bodyHtml": "<h1>An h1 header</h1>\n<p>Paragraphs are separated by a blank line.</p>\n<p>2nd paragraph. <em>Italic</em>, <strong>bold</strong>, and <code>monospace</code>. Itemized lists\nlook like:</p>\n<ul>\n<li>this one</li>\n<li>that one</li>\n<li>the other one</li>\n</ul>\n<p>Note that --- not considering the asterisk --- the actual text\ncontent starts at 4-columns in.</p>\n<blockquote>\n<p>Block quotes are\nwritten like so.</p>\n<p>They can span multiple paragraphs,\nif you like.</p>\n</blockquote>\n<p>Use 3 dashes for an em-dash. Use 2 dashes for ranges (ex., &quot;it's all\nin chapters 12--14&quot;). Three dots ... will be converted to an ellipsis.\nUnicode is supported. ☺</p>\n<h2>An h2 header</h2>\n<p>Here's a numbered list:</p>\n<ol>\n<li>first item</li>\n<li>second item</li>\n<li>third item</li>\n</ol>\n<p>Note again how the actual text starts at 4 columns in (4 characters\nfrom the left side). Here's a code sample:</p>\n<pre><code># Let me re-iterate ...\nfor i in 1 .. 10 { do-something(i) }\n</code></pre>\n<p>As you probably guessed, indented 4 spaces. By the way, instead of\nindenting the block, you can use delimited blocks, if you like:</p>\n<pre><code>define foobar() {\n    print &quot;Welcome to flavor country!&quot;;\n}\n</code></pre>\n<p>(which makes copying &amp; pasting easier). You can optionally mark the\ndelimited block for Pandoc to syntax highlight it:</p>\n<pre><code class=\"language-python\">import time\n# Quick, count to ten!\nfor i in range(10):\n    # (but not *too* quick)\n    time.sleep(0.5)\n    print i\n</code></pre>\n<h3>An h3 header</h3>\n<p>Now a nested list:</p>\n<ol>\n<li>\n<p>First, get these ingredients:</p>\n<ul>\n<li>carrots</li>\n<li>celery</li>\n<li>lentils</li>\n</ul>\n</li>\n<li>\n<p>Boil some water.</p>\n</li>\n<li>\n<p>Dump everything in the pot and follow\nthis algorithm:</p>\n<pre><code>find wooden spoon\nuncover pot\nstir\ncover pot\nbalance wooden spoon precariously on pot handle\nwait 10 minutes\ngoto first step (or shut off burner when done)\n</code></pre>\n<p>Do not bump wooden spoon or it will fall.</p>\n</li>\n</ol>\n<p>Notice again how text always lines up on 4-space indents (including\nthat last line which continues item 3 above).</p>\n<p>Here's a link to <a href=\"http://foo.bar\">a website</a>, to a <a href=\"local-doc.html\">local\ndoc</a>, and to a <a href=\"#an-h2-header\">section heading in the current\ndoc</a>. Here's a footnote [^1].</p>\n<p>[^1]: Footnote text goes here.</p>\n<p>Tables can look like this:</p>\n<p>size  material      color</p>\n<hr>\n<p>9     leather       brown\n10    hemp canvas   natural\n11    glass         transparent</p>\n<p>Table: Shoes, their sizes, and what they're made of</p>\n<p>(The above is the caption for the table.) Pandoc also supports\nmulti-line tables:</p>\n<hr>\n<p>keyword   text</p>\n<hr>\n<p>red       Sunsets, apples, and\nother red or reddish\nthings.</p>\n<p>green     Leaves, grass, frogs\nand other things it's\nnot easy being.</p>\n<hr>\n<p>A horizontal rule follows.</p>\n<hr>\n<p>Here's a definition list:</p>\n<p>apples\n: Good for making applesauce.\noranges\n: Citrus!\ntomatoes\n: There's no &quot;e&quot; in tomatoe.</p>\n<p>Again, text is indented 4 spaces. (Put a blank line between each\nterm/definition pair to spread things out more.)</p>\n<p>Here's a &quot;line block&quot;:</p>\n<p>| Line one\n|   Line too\n| Line tree</p>\n<p>and images can be specified like so:</p>\n<p><img src=\"example-image.jpg\" alt=\"example image\" title=\"An exemplary image\"></p>\n<p>Inline math equations go in like so: $\\omega = d\\phi / dt$. Display\nmath should get its own line and be put in in double-dollarsigns:</p>\n<p>$$I = \\int \\rho R^{2} dV$$</p>\n<p>And note that you can backslash-escape any punctuation characters\nwhich you wish to be displayed literally, ex.: `foo`, *bar*, etc.</p>\n",
-      "title": "An h1 header",
-      "dir": "test/data/output",
-      "base": "big-markdown.json",
-      "ext": ".json",
-      "sourceBase": "big-markdown.md",
-      "sourceExt": ".md"
-    },
     "test/data/output/frontmatter-code.json": {
       "test": "frontmatter",
       "draft": true,
       "num": 1,
       "bodyContent": "Some text that might be a title\n\nProcess a directory of markdown *and* yaml files to JSON files\n\n```js\nfunction doStuff() {\n  var a = 1 + 2\n  console.log(a)\n}\n```",
-      "bodyHtml": "<p>Some text that might be a title</p>\n<p>Process a directory of markdown <em>and</em> yaml files to JSON files</p>\n<pre><code class=\"language-js\">function doStuff() {\n  var a = 1 + 2\n  console.log(a)\n}\n</code></pre>\n",
+      "bodyHtml": "<p>Some text that might be a title</p>\n<p>Process a directory of markdown <em>and</em> yaml files to JSON files</p>\n<pre><code class=\"hljs\"><span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">doStuff</span>(<span class=\"hljs-params\"></span>) </span>{\n  <span class=\"hljs-keyword\">var</span> a = <span class=\"hljs-number\">1</span> + <span class=\"hljs-number\">2</span>\n  <span class=\"hljs-built_in\">console</span>.log(a)\n}</code></pre>",
       "title": "Some text that might be a title",
       "dir": "test/data/output",
       "base": "frontmatter-code.json",
       "ext": ".json",
       "sourceBase": "frontmatter-code.md",
-      "sourceExt": ".md"
-    },
-    "test/data/output/frontmatter2.json": {
-      "test": "frontmatter",
-      "draft": true,
-      "num": 1,
-      "bodyContent": "Some text that might be a title\n\nProcess [a](#) directory of markdown *and* yaml files to JSON files",
-      "bodyHtml": "<p>Some text that might be a title</p>\n<p>Process <a href=\"#\">a</a> directory of markdown <em>and</em> yaml files to JSON files</p>\n",
-      "title": "Some text that might be a title",
-      "dir": "test/data/output",
-      "base": "frontmatter2.json",
-      "ext": ".json",
-      "sourceBase": "frontmatter2.md",
       "sourceExt": ".md"
     },
     "test/data/output/README.json": {
