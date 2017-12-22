@@ -3,7 +3,7 @@
 const fs = require('fs')
 const path = require('path')
 const globby = require('globby')
-const marked = require('marked')
+const markdownIt = require('markdown-it')()
 const yaml = require('js-yaml')
 const mkdirp = require('mkdirp')
 const removeMd = require('remove-markdown')
@@ -23,25 +23,7 @@ const SOURCE_MODE = 'source'
 function processmd (options, callback) {
   options = Object.assign({}, defaultOptions, options)
 
-  // Init marked.
-  let markedOptions = {
-    langPrefix: 'hljs lang-'
-  }
-  if (options.highlightCode) {
-    try {
-      markedOptions = Object.assign(markedOptions, {
-        highlight: function (code) {
-          const highlight = require('highlight.js')
-          return highlight.highlightAuto(code).value
-        }
-      })
-    } catch (e) {
-      console.log(e)
-    }
-  }
-  marked.setOptions(markedOptions)
-
-  options.markdownRenderer = options.markdownRenderer || marked
+  options.markdownRenderer = options.markdownRenderer || function mdRender (str) { return markdownIt.render(str) }
 
   const globs = (options.files || []).concat(options._)
   if (globs.length === 0) {
