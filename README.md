@@ -151,8 +151,8 @@ module.exports = {
   convertMode: 'json',
   // Whether to output to stdout or not.
   stdout: false,
-  // Custom markdown renderer function, null to use the default: `marked`.
-  markdownRenderer: null,
+  // Custom markdown renderer function, null to use the default: `markdown-it`.
+  markdownRenderer: null
 }
 ```
 

@@ -38,7 +38,6 @@
     "js-yaml": "^3.8.3",
     "markdown-it": "^8.4.0",
     "markdown-it-highlight": "^0.2.0",
-    "marked": "^0.3.6",
     "mkdirp": "^0.5.1",
     "remove-markdown": "^0.1.0",
     "yargs": "^7.1.0"
