@@ -24,7 +24,7 @@ const SOURCE_MODE = 'source'
 function processmd (options, callback) {
   options = Object.assign({}, defaultOptions, options)
 
-  if (options.highlightCode !== 'false') {
+  if (options.highlightCode) {
     markdownIt.use(markdownItHighlight)
   }
 
