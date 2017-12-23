@@ -23,7 +23,11 @@ const SOURCE_MODE = 'source'
 // Main function
 function processmd (options, callback) {
   options = Object.assign({}, defaultOptions, options)
-  markdownIt.use(markdownItHighlight)
+
+  if (options.highlightCode !== 'false') {
+    markdownIt.use(markdownItHighlight)
+  }
+
   options.markdownRenderer = options.markdownRenderer || function mdRender (str) { return markdownIt.render(str) }
 
   const globs = (options.files || []).concat(options._)
