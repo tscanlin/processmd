@@ -156,6 +156,14 @@ module.exports = {
 }
 ```
 
+To turn off options you can [prefix them with '--no-'](https://github.com/yargs/yargs/blob/master/docs/tricks.md#negate)
+
+For example, if you want to disable code highlighting you would run:
+
+```
+$ processmd ReadMe.md --no-highlightCode
+```
+
 ## Development
 
 To update tests, add new test files to `test/data/input`, and run `npm run start && npm run back`
