@@ -30,7 +30,7 @@ function processmd (options, callback) {
 
   options.markdownRenderer = options.markdownRenderer || function mdRender (str) { return markdownIt.render(str) }
 
-  const globs = (options.files || []).concat(options._)
+  const globs = (options.files || []).concat(options._ || [])
   if (globs.length === 0) {
     throw new Error('You must pass file patterns in to be processed.')
   }
