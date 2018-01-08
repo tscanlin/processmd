@@ -3,7 +3,7 @@
 const fs = require('fs')
 const path = require('path')
 const globby = require('globby')
-const markdownIt = require('markdown-it')()
+const MarkdownIt = require('markdown-it')
 const markdownItHighlight = require('markdown-it-highlight').default
 const yaml = require('js-yaml')
 const mkdirp = require('mkdirp')
@@ -24,6 +24,7 @@ const SOURCE_MODE = 'source'
 function processmd (options, callback) {
   options = Object.assign({}, defaultOptions, options)
 
+  const markdownIt = MarkdownIt(options.markdownOptions)
   if (options.highlightCode) {
     markdownIt.use(markdownItHighlight)
   }

@@ -2,7 +2,7 @@
 
 ![Build Status](https://travis-ci.org/tscanlin/processmd.svg?branch=master)
 
-processmd uses [globby](https://github.com/sindresorhus/globby) to process directories of markdown and yaml files to a mirrored tree of JSON files. Additionally, with the `convertMode: "source"` option you can convert back from json to the input markdown and yaml files. This is mostly useful for blogs or static content for websites or other places where json is used but the readability of yaml is useful.
+processmd uses [globby](https://github.com/sindresorhus/globby) and [markdown-it](https://github.com/markdown-it/markdown-it) to process directories of markdown and yaml files to a JSON files with html. It has many options to format the output as you like, you can convert a nested directory of yaml to json and optionally add a "summary" file with info about all the files. Additionally, with the `convertMode: "source"` option you can convert back from json to the input markdown and yaml files. This is mostly useful for blogs or static content for websites or other places where json is easier to use but the readability of yaml is useful.
 
 Comparison to similar tools:
 
@@ -152,8 +152,10 @@ module.exports = {
   // Whether to output to stdout or not.
   stdout: false,
   // Custom markdown renderer function, null to use the default: `markdown-it`.
-  markdownRenderer: null
-}
+  markdownRenderer: null,
+  // Options to pass to the default markdown processor, markdown-it.
+  // See here for options: https://github.com/markdown-it/markdown-it#init-with-presets-and-options
+  markdownOptions: {}
 ```
 
 To turn off options you can [prefix them with '--no-'](https://github.com/yargs/yargs/blob/master/docs/tricks.md#negate)
