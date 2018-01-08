@@ -32,5 +32,8 @@ module.exports = {
   // Whether to output to stdout or not.
   stdout: false,
   // Custom markdown renderer function, null to use the default: `markdown-it`.
-  markdownRenderer: null
+  markdownRenderer: null,
+  // Options to pass to the default markdown processor, markdown-it.
+  // See here for options: https://github.com/markdown-it/markdown-it#init-with-presets-and-options
+  markdownOptions: {}
 }
