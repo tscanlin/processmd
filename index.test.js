@@ -18,8 +18,8 @@ describe('processmd', () => {
     cli.stdout.on('data', data => {
       const parsedData = JSON.parse(data.toString())
       expect(parsedData.sourceFileArray).toEqual(outputJson.sourceFileArray)
-      Object.keys(parsedData.fileMap).forEach(key => {
-        Object.keys(parsedData.fileMap[key]).forEach(prop => {
+      Object.keys(parsedData.fileMap).sort().forEach(key => {
+        Object.keys(parsedData.fileMap[key]).sort().forEach(prop => {
           if (
             typeof parsedData.fileMap[key][prop] === 'string' &&
             (prop === 'bodyHtml' || prop === 'bodyContent')
@@ -57,8 +57,8 @@ describe('processmd', () => {
     cli.stdout.on('data', data => {
       const parsedData = JSON.parse(data.toString())
       expect(parsedData.sourceFileArray).toEqual(outputSummaryJson.sourceFileArray)
-      Object.keys(parsedData.fileMap).forEach(key => {
-        Object.keys(parsedData.fileMap[key]).forEach(prop => {
+      Object.keys(parsedData.fileMap).sort().forEach(key => {
+        Object.keys(parsedData.fileMap[key]).sort().forEach(prop => {
           if (
             typeof parsedData.fileMap[key][prop] === 'string' &&
             (prop === 'bodyHtml' || prop === 'bodyContent')
@@ -96,7 +96,7 @@ describe('processmd', () => {
     cli.stdout.on('data', data => {
       const parsedData = JSON.parse(data.toString())
       expect(parsedData.sourceFileArray).toEqual(backJson.sourceFileArray)
-      Object.keys(parsedData.fileMap).forEach(key => {
+      Object.keys(parsedData.fileMap).sort().forEach(key => {
         expect(parsedData.fileMap[key].split('\r\n').join('\n')).toEqual(
           backJson.fileMap[key]
         )
