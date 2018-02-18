@@ -35,5 +35,7 @@ module.exports = {
   markdownRenderer: null,
   // Options to pass to the default markdown processor, markdown-it.
   // See here for options: https://github.com/markdown-it/markdown-it#init-with-presets-and-options
-  markdownOptions: {}
+  markdownOptions: {},
+  // Include generated ids on headings.
+  headingIds: false
 }

@@ -25,8 +25,12 @@ function processmd (options, callback) {
   options = Object.assign({}, defaultOptions, options)
 
   const markdownIt = MarkdownIt(options.markdownOptions)
+
   if (options.highlightCode) {
     markdownIt.use(markdownItHighlight)
+  }
+  if (options.headingIds) {
+    markdownIt.use(require('markdown-it-named-headings'))
   }
 
   options.markdownRenderer = options.markdownRenderer || function mdRender (str) { return markdownIt.render(str) }
