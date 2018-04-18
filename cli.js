@@ -8,6 +8,11 @@ const argv = require('yargs')
 
 if (process.argv && process.argv.length > 2) {
   const options = Object.assign({}, defaultOptions, argv)
+  try {
+    options.markdownOptions = JSON.parse(options.markdownOptions)
+  } catch (err) {
+    // noop: markdownOptions was not valid JSON, leave it as a string
+  }
 
   processmd(options, (err, data) => {
     if (err) {
