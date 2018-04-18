@@ -166,4 +166,36 @@ describe('processmd', () => {
       ])
     ).toBe('')
   })
+
+  it('should parse markdownOptions if argument is JSON', done => {
+    const cli = spawn('node', [
+      './cli.js',
+      'test/data/input/**/*.{yml,md}',
+      '--stdout',
+      '--outputDir',
+      'test/data/output',
+      '--markdownOptions {"linkify":true}'
+    ])
+
+    cli.on('close', code => {
+      expect(code).toEqual(0)
+      done()
+    })
+  })
+
+  it('should pass markdownOptions as a string if argument is not JSON (markdown-it preset name)', done => {
+    const cli = spawn('node', [
+      './cli.js',
+      'test/data/input/**/*.{yml,md}',
+      '--stdout',
+      '--outputDir',
+      'test/data/output',
+      '--markdownOptions zero'
+    ])
+
+    cli.on('close', code => {
+      expect(code).toEqual(0)
+      done()
+    })
+  })
 })
