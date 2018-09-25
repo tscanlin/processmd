@@ -46,29 +46,6 @@
       "sourceBase": "frontmatter-code.md",
       "sourceExt": ".md"
     },
-    "test/data/output/README.json": {
-      "bodyContent": "# processmd\n\nProcess a directory of markdown and yaml files to JSON files\n\nLinkify check: https://www.github.com/tscanlin/processmd",
-      "bodyHtml": "<h1>processmd</h1>\n<p>Process a directory of markdown and yaml files to JSON files</p>\n<p>Linkify check: https://www.github.com/tscanlin/processmd</p>\n",
-      "title": "processmd",
-      "dir": "test/data/output",
-      "base": "README.json",
-      "ext": ".json",
-      "sourceBase": "README.md",
-      "sourceExt": ".md"
-    },
-    "test/data/output/frontmatter2.json": {
-      "test": "frontmatter",
-      "draft": true,
-      "num": 1,
-      "bodyContent": "Some text that might be a title\n\nProcess [a](#) directory of markdown *and* yaml files to JSON files\n\n## H2 heading",
-      "bodyHtml": "<p>Some text that might be a title</p>\n<p>Process <a href=\"#\">a</a> directory of markdown <em>and</em> yaml files to JSON files</p>\n<h2>H2 heading</h2>\n",
-      "title": "Some text that might be a title",
-      "dir": "test/data/output",
-      "base": "frontmatter2.json",
-      "ext": ".json",
-      "sourceBase": "frontmatter2.md",
-      "sourceExt": ".md"
-    },
     "test/data/output/L1/test.json": {
       "type": "yaml",
       "draft": false,
@@ -87,6 +64,29 @@
       "ext": ".json",
       "sourceBase": "test.yml",
       "sourceExt": ".yml"
+    },
+    "test/data/output/frontmatter2.json": {
+      "test": "frontmatter",
+      "draft": true,
+      "num": 1,
+      "bodyContent": "Some text that might be a title\n\nProcess [a](#) directory of markdown *and* yaml files to JSON files\n\n## H2 heading",
+      "bodyHtml": "<p>Some text that might be a title</p>\n<p>Process <a href=\"#\">a</a> directory of markdown <em>and</em> yaml files to JSON files</p>\n<h2>H2 heading</h2>\n",
+      "title": "Some text that might be a title",
+      "dir": "test/data/output",
+      "base": "frontmatter2.json",
+      "ext": ".json",
+      "sourceBase": "frontmatter2.md",
+      "sourceExt": ".md"
+    },
+    "test/data/output/README.json": {
+      "bodyContent": "# processmd\n\nProcess a directory of markdown and yaml files to JSON files\n\nLinkify check: https://www.github.com/tscanlin/processmd",
+      "bodyHtml": "<h1>processmd</h1>\n<p>Process a directory of markdown and yaml files to JSON files</p>\n<p>Linkify check: https://www.github.com/tscanlin/processmd</p>\n",
+      "title": "processmd",
+      "dir": "test/data/output",
+      "base": "README.json",
+      "ext": ".json",
+      "sourceBase": "README.md",
+      "sourceExt": ".md"
     }
   },
   "sourceFileArray": [
