@@ -129,6 +129,8 @@ module.exports = {
   watchDebounce: 1000,
   // Prefix for output filenames, default is no prefix, just the original filename.
   filenamePrefix: '',
+  // For markdown files, rendering mathematical equations.
+  renderLatex: true,
   // For markdown files, highlight code block.
   highlightCode: true,
   // For markdown files, how many characters should be included in an add `preview` property. 0 for no preview.
