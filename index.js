@@ -27,7 +27,7 @@ function processmd (options, callback) {
 
   const markdownIt = MarkdownIt(options.markdownOptions)
 
-  if(options.renderLatex){
+  if (options.renderLatex) {
     markdownIt.use(markdownItLatex)
   }
 
