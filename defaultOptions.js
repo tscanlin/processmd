@@ -15,6 +15,8 @@ module.exports = {
   highlightCode: true,
   // For markdown files, how many characters should be included in an add `preview` property. 0 for no preview.
   preview: 0,
+  // Option to override the preview delimeter to handle internationalization and add greater flexibility (default: ' ').
+  previewDelimiter: ' ',
   // Include body props in summary file.
   includeBodyProps: false,
   // Include the markdown document title as `title` on the resulting json objects.
