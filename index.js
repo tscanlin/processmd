@@ -79,7 +79,10 @@ function processmd (options, callback) {
       function processOutput () {
         const summaryObj = {}
         summaryObj.fileMap = {}
-        summaryObj.sourceFileArray = result
+        // Case insensitive array to stay backwards compatible for now.
+        summaryObj.sourceFileArray = result.sort(function (a, b) {
+          return a.toLowerCase().localeCompare(b.toLowerCase())
+        })
         let finishCount = 0
         result.forEach(function (file, i) {
           processingFunc(file, options, function (newFile, content) {
@@ -167,7 +170,7 @@ function processYamlAndMarkdown (file, options, cb) {
       let i = splitPoint
       while (i < options.preview) {
         i++
-        if (preview[i] === ' ') {
+        if (preview[i] === options.previewDelimiter) {
           splitPoint = i
         }
         if (preview[i] === undefined) {

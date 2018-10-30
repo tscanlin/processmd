@@ -33,21 +33,21 @@
   "author": "Tim Scanlin",
   "license": "MIT",
   "dependencies": {
-    "globby": "^6.1.0",
-    "highlight.js": "^9.11.0",
-    "js-yaml": "^3.8.3",
-    "markdown-it": "^8.4.0",
+    "globby": "^8.0.1",
+    "highlight.js": "^9.12.0",
+    "js-yaml": "^3.12.0",
+    "markdown-it": "^8.4.2",
     "markdown-it-highlight": "^0.2.0",
     "markdown-it-latex": "^0.2.0",
     "markdown-it-named-headings": "^1.1.0",
     "mkdirp": "^0.5.1",
-    "remove-markdown": "^0.1.0",
-    "yargs": "^7.1.0"
+    "remove-markdown": "^0.3.0",
+    "yargs": "^12.0.2"
   },
   "devDependencies": {
-    "jasmine": "^2.6.0",
-    "prettier": "^1.2.2",
-    "standard": "^10.0.2"
+    "jasmine": "^3.2.0",
+    "prettier": "^1.14.3",
+    "standard": "^12.0.1"
   },
   "standard": {
     "globals": [
