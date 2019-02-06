@@ -33,7 +33,7 @@
   "author": "Tim Scanlin",
   "license": "MIT",
   "dependencies": {
-    "globby": "^8.0.1",
+    "globby": "^9.0.0",
     "highlight.js": "^9.12.0",
     "js-yaml": "^3.12.0",
     "markdown-it": "^8.4.2",
