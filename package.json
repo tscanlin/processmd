@@ -1,6 +1,6 @@
 {
   "name": "processmd",
-  "version": "4.4.1",
+  "version": "4.4.2",
   "description": "Process a directory of markdown and yaml files to JSON files",
   "main": "index.js",
   "bin": {
