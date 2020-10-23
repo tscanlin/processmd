@@ -105,7 +105,9 @@ function processmd (options, callback) {
               // Sort the files.
               const sortedObj = {}
               Object.keys(summaryObj.fileMap)
-                .sort()
+                .sort(function (a, b) {
+                  return a.toLowerCase().localeCompare(b.toLowerCase())
+                })
                 .forEach(function (v, i) {
                   sortedObj[v] = summaryObj.fileMap[v]
                 })
