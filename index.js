@@ -96,11 +96,23 @@ function processmd (options, callback) {
               content = removeBodyProps(content)
             }
 
-            summaryObj.fileMap[filename] = options.convertMode === SOURCE_MODE
+            const val = options.convertMode === SOURCE_MODE
               ? content
               : JSON.parse(content)
+            summaryObj.fileMap[filename] = val
 
             if (finishCount === result.length) {
+              // Sort the files.
+              const sortedObj = {}
+              Object.keys(summaryObj.fileMap)
+                .sort(function (a, b) {
+                  return a.toLowerCase().localeCompare(b.toLowerCase())
+                })
+                .forEach(function (v, i) {
+                  sortedObj[v] = summaryObj.fileMap[v]
+                })
+              summaryObj.fileMap = sortedObj
+
               if (options.summaryOutput) {
                 writeFileContent(options.summaryOutput, JSON.stringify(summaryObj, null, 2), function (e, d) {
                   resolve(summaryObj)
