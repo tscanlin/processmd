@@ -19,7 +19,7 @@
     "lint": "standard",
     "test": "jasmine",
     "pretest": "npm run lint",
-    "preversion": "npm run lint && npm run test",
+    "preversion": "npm run lint && npm run test && npm run build",
     "v-patch": "npm version patch && git push --tags && npm publish && git push",
     "v-minor": "npm version minor && git push --tags && npm publish && git push",
     "v-major": "npm version major && git push --tags && npm publish && git push"
