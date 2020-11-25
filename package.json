@@ -34,7 +34,7 @@
   "license": "MIT",
   "dependencies": {
     "globby": "^10.0.1",
-    "highlight.js": "^9.15.10",
+    "highlight.js": "^10.1.2",
     "js-yaml": "^3.13.1",
     "markdown-it": "^10.0.0",
     "markdown-it-highlight": "^0.2.0",
