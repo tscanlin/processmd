@@ -5,10 +5,10 @@ const path = require('path')
 const globby = require('globby')
 const MarkdownIt = require('markdown-it')
 const markdownItLatex = require('markdown-it-latex').default
-const markdownItHighlight = require('markdown-it-highlight').default
 const yaml = require('js-yaml')
 const mkdirp = require('mkdirp')
 const removeMd = require('remove-markdown')
+const markdownItHighlight = require('./utils/markdown-it-highlight.js')
 const defaultOptions = require('./defaultOptions')
 
 const EXTENSIONS = {
