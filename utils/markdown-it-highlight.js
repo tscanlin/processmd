@@ -1,6 +1,5 @@
 const hljs = require('highlight.js')
 
-// highlightPlugin
 module.exports = function highlightPlugin (md) {
   const temp = md.renderer.rules.fence.bind(md.renderer.rules)
   md.renderer.rules.fence = (tokens, idx, options, env, slf) => {

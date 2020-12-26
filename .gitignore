@@ -3,3 +3,4 @@ test/data/output/*
 test/data/back/*
 *.log
 *.log*
+cli.old.js
