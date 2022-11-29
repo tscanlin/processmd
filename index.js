@@ -84,6 +84,7 @@ function processmd (options, callback) {
           return a.toLowerCase().localeCompare(b.toLowerCase())
         })
         let finishCount = 0
+        const summaryArray = []
         result.forEach(function (file, i) {
           processingFunc(file, options, function (newFile, content) {
             finishCount++
@@ -100,6 +101,7 @@ function processmd (options, callback) {
               ? content
               : JSON.parse(content)
             summaryObj.fileMap[filename] = val
+            summaryArray.push(val)
 
             if (finishCount === result.length) {
               // Sort the files.
@@ -114,9 +116,15 @@ function processmd (options, callback) {
               summaryObj.fileMap = sortedObj
 
               if (options.summaryOutput) {
-                writeFileContent(options.summaryOutput, JSON.stringify(summaryObj, null, 2), function (e, d) {
-                  resolve(summaryObj)
-                })
+                if (options.summaryOutputFormat === 'array') {
+                  writeFileContent(options.summaryOutput, JSON.stringify(summaryArray, null, 2), function (e, d) {
+                    resolve(summaryArray)
+                  })
+                } else {
+                  writeFileContent(options.summaryOutput, JSON.stringify(summaryObj, null, 2), function (e, d) {
+                    resolve(summaryObj)
+                  })
+                }
               } else {
                 resolve(summaryObj)
               }
