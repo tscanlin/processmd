@@ -3,6 +3,8 @@ module.exports = {
   outputDir: './dist',
   // Output location for the summary file (relative path to json file that has content from all files).
   summaryOutput: null,
+  // Format of the summary output that's generated ('object' or 'array').
+  summaryOutputFormat: 'object',
   // Watch mode, recompile on file changes.
   watch: false,
   // Debounce timeout for watching files.
